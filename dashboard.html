@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Auswahl</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Fester Header mit Dashboard-Button -->
+    <header class="site-header">
+        <a href="index.html" class="nav-button">Logout</a>
+    </header>
+
+    <div class="container">
+        <h1>Willkommen <span id="userName"></span></h1>
+        <div class="quiz-grid">
+            <a href="quiz.html?quiz=fruits" class="quiz-card" style="background-color:#FF6B6B">This or That: Fruits</a>
+            <a href="quiz.html?quiz=food" class="quiz-card" style="background-color:#4ECDC4">This or That: Food
+                Preferences</a>
+            <a href="quiz.html?quiz=house" class="quiz-card" style="background-color:#FFD93D">This or That: Dream House
+                Exterior</a>
+        </div>
+
+        <h2 style="margin-top: 50px;">Abgeschlossene Quizzes</h2>
+        <div id="completedQuizzes" class="quiz-grid"></div>
+
+        <script>
+            const completedContainer = document.getElementById("completedQuizzes");
+            const allQuizzes = ["fruits", "food", "house"];
+            const currentUser = localStorage.getItem("user");
+
+            const bgColors = ["#FF6B6B", "#4ECDC4", "#FFD93D"];
+
+            allQuizzes.forEach((quizName, index) => {
+                fetch(`load.php?quiz=${quizName}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data[currentUser]) {
+                            const link = document.createElement("a");
+                            link.className = "quiz-card";
+                            link.style.backgroundColor = bgColors[index % bgColors.length];
+                            link.href = `results.html?quiz=${quizName}`;
+                            link.textContent = `This or That: ${quizName.charAt(0).toUpperCase() + quizName.slice(1)}`;
+                            completedContainer.appendChild(link);
+                        }
+                    })
+                    .catch(err => {
+                        console.error(`Fehler beim Laden von ${quizName}:`, err);
+                    });
+            });
+        </script>
+
+
+
+    </div>
+    <script>
+        document.getElementById("userName").textContent = localStorage.getItem("user") || "Gast";
+    </script>
+</body>
+
+</html>

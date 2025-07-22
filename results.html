@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Ergebnisse</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Fester Header mit Dashboard-Link -->
+  <header class="site-header">
+    <a href="dashboard.html" class="nav-button">🏠 Dashboard</a>
+  </header>
+
+  <!-- Hauptinhalt -->
+  <div class="container">
+    <h1>Ergebnisvergleich</h1>
+    <div id="results">Wird geladen...</div>
+
+    <!-- Chatbereich -->
+    <div id="chatBox">
+      <h3>Diskussion</h3>
+      <div id="chatMessages" class="chat-messages"></div>
+      <input type="text" id="chatInput" placeholder="Nachricht schreiben...">
+      <button onclick="sendMessage()">Senden</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/quizzes.js"></script>
+  <script src="js/results.js"></script>
+
+</body>
+</html>
