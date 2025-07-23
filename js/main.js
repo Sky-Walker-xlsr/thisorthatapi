@@ -78,42 +78,47 @@ function initApp() {
     loadQuestion();
   }
 
-  // === RESULTS-SEITE ===
-  if (location.pathname.includes("results.html") && quizName) {
-    const resultDiv = document.getElementById("results");
+// === RESULTS-SEITE ===
+if (location.pathname.includes("results.html") && quizName) {
+  const resultDiv = document.getElementById("results");
 
-    fetch(`/api/load?quiz=${quizName}`)
-      .then(res => res.json())
-      .then(data => {
-        const quizData = quizzes[quizName];
-        if (!quizData || !data || Object.keys(data).length < 1) {
-          resultDiv.innerHTML = "<p>Keine Ergebnisse gefunden.</p>";
-          return;
-        }
+  fetch(`/api/load?quiz=${quizName}`)
+    .then(res => res.json())
+    .then(data => {
+      const quizData = quizzes[quizName];
+      if (!quizData || !data || Object.keys(data).length < 1) {
+        resultDiv.innerHTML = "<p>Keine Ergebnisse gefunden.</p>";
+        return;
+      }
 
-        let html = "";
-        Object.entries(data).forEach(([user, answers]) => {
-          html += `<h3>${user}</h3>`;
-          answers.forEach((choice, i) => {
-            const q = quizData[i];
-            let img = "";
-            if (choice === "left") img = q.img1;
-            else if (choice === "right") img = q.img2;
+      let html = "";
+      Object.entries(data).forEach(([user, answers]) => {
+        html += `<div class="user-name"><h2>${user}</h2></div>`;
 
-            html += `
-              <p>${q.question}</p>
-              <img src="${img}" style="width:150px;height:150px;border-radius:15px;"><hr>
-            `;
-          });
+        answers.forEach((choice, i) => {
+          const q = quizData[i];
+          let img = "";
+          if (choice === "left") img = q.img1;
+          else if (choice === "right") img = q.img2;
+
+          html += `
+            <div class="result-answer">
+              <div class="result-question">${q.question}</div>
+              <img src="${img}" alt="Antwort von ${user}">
+            </div>
+            <hr>
+          `;
         });
-
-        resultDiv.innerHTML = html;
-      })
-      .catch(err => {
-        resultDiv.innerHTML = "<p>Fehler beim Laden der Ergebnisse.</p>";
-        console.error(err);
       });
-  }
+
+      resultDiv.innerHTML = html;
+    })
+    .catch(err => {
+      resultDiv.innerHTML = "<p>Fehler beim Laden der Ergebnisse.</p>";
+      console.error(err);
+    });
+}
+
 
   // === DASHBOARD-SEITE ===
   if (location.pathname.endsWith("dashboard.html")) {
