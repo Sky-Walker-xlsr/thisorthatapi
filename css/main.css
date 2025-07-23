@@ -194,21 +194,33 @@ input {
     pointer-events: auto;
   }
     
- .result-compare-header {
+.result-compare-header {
   display: flex;
   justify-content: space-between;
-  font-weight: bold;
-  text-align: center;
-  padding: 20px 0 10px 0;
   max-width: 700px;
-  margin: auto;
+  margin: 0 auto 20px auto;
+  padding-top: 10px;
   gap: 20px;
+}
+
+.user-label {
+  width: 50%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.result-question-center {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 20px;
 }
 
 .result-row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 40px;
   gap: 20px;
   max-width: 700px;
@@ -224,16 +236,10 @@ input {
 .result-answer img {
   width: 100%;
   max-width: 300px;
-  height: auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 20px;
   box-shadow: 0 0 12px rgba(0,0,0,0.4);
-}
-
-.result-question {
-  font-weight: bold;
-  margin-bottom: 10px;
 }
 
 .invisible {
