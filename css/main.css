@@ -235,7 +235,7 @@ input {
 
 .result-answer img {
   width: 100%;
-  max-width: 300px;
+  max-width: 200px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 20px;
