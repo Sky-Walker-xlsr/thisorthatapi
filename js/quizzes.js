@@ -32,10 +32,14 @@ if (location.pathname.endsWith("quiz.html") && quizName && user) {
         if (index < quizData.length) {
             loadQuestion();
         } else {
-            fetch(`/api/save?quiz=${quizName}&user=${user}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(answers)
+            fetch(`/api/save`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                quiz: quizName,
+                user: user,
+                answers: answers
+              })
             }).then(() => {
                 location.href = `results.html?quiz=${quizName}`;
             });
