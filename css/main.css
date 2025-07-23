@@ -208,6 +208,8 @@ input {
     object-fit: cover;
     border-radius: 20px;
     box-shadow: 0 0 12px rgba(0,0,0,0.4);
+    display: block;
+    margin: auto;
   }
   
   .result-question {
