@@ -167,6 +167,13 @@ if (location.pathname.includes("results.html") && quizName) {
 const chatBox = document.getElementById("chatMessages");
 const chatInput = document.getElementById("chatInput");
 
+chatInput?.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
 // 💡 Aktuell eingeloggter Benutzer
 const currentUser = sessionStorage.getItem("username") || "Yannick";
 
@@ -189,12 +196,7 @@ window.sendMessage = function () {
   });
 };
 
-chatInput?.addEventListener("keydown", function (e) {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    sendMessage();
-  }
-});
+
 
 // Funktion zur Darstellung einer Nachricht
 function renderMessage(text, fromUser) {
