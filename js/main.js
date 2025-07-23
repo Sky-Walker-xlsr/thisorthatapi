@@ -78,7 +78,7 @@ function initApp() {
     loadQuestion();
   }
 
-// === RESULTS-SEITE ===
+// === RESULTS-SEITE mit Vergleich links/rechts ===
 if (location.pathname.includes("results.html") && quizName) {
   const resultDiv = document.getElementById("results");
 
@@ -86,29 +86,36 @@ if (location.pathname.includes("results.html") && quizName) {
     .then(res => res.json())
     .then(data => {
       const quizData = quizzes[quizName];
-      if (!quizData || !data || Object.keys(data).length < 1) {
-        resultDiv.innerHTML = "<p>Keine Ergebnisse gefunden.</p>";
+      if (!quizData || !data || Object.keys(data).length < 2) {
+        resultDiv.innerHTML = "<p>Mindestens zwei Ergebnisse nötig für den Vergleich.</p>";
         return;
       }
 
-      let html = "";
-      Object.entries(data).forEach(([user, answers]) => {
-        html += `<div class="user-name"><h2>${user}</h2></div>`;
+      const [user1, user2] = Object.keys(data); // z. B. Yannick & Amélie
+      const answers1 = data[user1];
+      const answers2 = data[user2];
 
-        answers.forEach((choice, i) => {
-          const q = quizData[i];
-          let img = "";
-          if (choice === "left") img = q.img1;
-          else if (choice === "right") img = q.img2;
+      let html = `<div class="result-compare-header">
+                    <div>${user1}</div>
+                    <div>${user2}</div>
+                  </div>`;
 
-          html += `
+      quizData.forEach((q, i) => {
+        const choice1 = answers1[i] === "left" ? q.img1 : q.img2;
+        const choice2 = answers2[i] === "left" ? q.img1 : q.img2;
+
+        html += `
+          <div class="result-row">
             <div class="result-answer">
               <div class="result-question">${q.question}</div>
-              <img src="${img}" alt="Antwort von ${user}">
+              <img src="${choice1}" alt="Antwort von ${user1}">
             </div>
-            <hr>
-          `;
-        });
+            <div class="result-answer">
+              <div class="result-question invisible">${q.question}</div>
+              <img src="${choice2}" alt="Antwort von ${user2}">
+            </div>
+          </div>
+        `;
       });
 
       resultDiv.innerHTML = html;
@@ -118,6 +125,7 @@ if (location.pathname.includes("results.html") && quizName) {
       console.error(err);
     });
 }
+
 
 
   // === DASHBOARD-SEITE ===
