@@ -237,6 +237,22 @@ input {
   border-top-right-radius: 0;
 }
 
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  margin-bottom: 5px;
+  color: #ccc;
+  font-weight: bold;
+  font-size: 14px;
+}
+.chat-name.left {
+  text-align: left;
+}
+.chat-name.right {
+  text-align: right;
+}
+
   .quiz-card {
     display: flex;
     align-items: center;
