@@ -163,28 +163,49 @@ if (location.pathname.includes("results.html") && quizName) {
     });
   }
 
-  // === CHAT (nur auf results.html) ===
-  const chatBox = document.getElementById("chatMessages");
-  const chatInput = document.getElementById("chatInput");
+// === CHAT (nur auf results.html) ===
+const chatBox = document.getElementById("chatMessages");
+const chatInput = document.getElementById("chatInput");
 
-  window.sendMessage = function () {
-    const msg = chatInput.value.trim();
-    if (!msg) return;
+// 💡 Aktuell eingeloggter Benutzer
+const currentUser = sessionStorage.getItem("username") || "Yannick";
 
-    const chatData = { quiz: quizName, user, text: msg };
-    fetch("/api/save?quiz=chat_" + quizName + "&user=" + user, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(chatData)
-    }).then(() => location.reload());
-  };
+// Funktion zum Senden einer Nachricht
+window.sendMessage = function () {
+  const msg = chatInput.value.trim();
+  if (!msg) return;
 
-  if (chatBox) {
-    fetch(`/api/load?quiz=chat_${quizName}`)
-      .then(res => res.json())
-      .then(chat => {
-        const messages = Object.values(chat || {});
-        chatBox.innerHTML = messages.map(m => `<p><strong>${m.user}:</strong> ${m.text}</p>`).join("");
+  const chatData = { quiz: quizName, user: currentUser, text: msg };
+
+  fetch("/api/save?quiz=chat_" + quizName + "&user=" + currentUser, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(chatData)
+  }).then(() => {
+    renderMessage(msg, currentUser);
+    chatInput.value = "";
+  });
+};
+
+// Funktion zur Darstellung einer Nachricht
+function renderMessage(text, fromUser) {
+  const msgDiv = document.createElement("div");
+  msgDiv.className = `chat-message ${fromUser.toLowerCase()}`;
+  msgDiv.textContent = text;
+  chatBox.appendChild(msgDiv);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// Nachrichten laden beim Start
+if (chatBox) {
+  fetch(`/api/load?quiz=chat_${quizName}`)
+    .then(res => res.json())
+    .then(chat => {
+      const messages = Object.values(chat || {});
+      messages.forEach(m => {
+        renderMessage(m.text, m.user);
       });
-  }
+    });
+}
+
 }
