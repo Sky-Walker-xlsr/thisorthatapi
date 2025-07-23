@@ -200,14 +200,13 @@ function renderMessage(text, fromUser) {
 
 // Nachrichten laden beim Start
 if (chatBox) {
-  fetch(`/api/load?quiz=chat_${quizName}`)
+  fetch(`/api/load?quiz=${quizName}`)
     .then(res => res.json())
-    .then(chat => {
-      const messages = Object.values(chat || {});
-      messages.forEach(m => {
+    .then(data => {
+      const messages = data._chat || {};
+      Object.values(messages).forEach(m => {
         renderMessage(m.text, m.user);
       });
     });
 }
-
 }
