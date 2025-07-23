@@ -41,7 +41,7 @@ const quizzes = {
     ]
 };
 
-fetch(`load.php?quiz=${quizName}`)
+fetch(`/api/load?quiz=${quizName}`)
     .then(res => res.json())
     .then(data => {
         if (!quizName || !data || Object.keys(data).length === 0) {
