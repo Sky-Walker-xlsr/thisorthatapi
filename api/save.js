@@ -40,6 +40,10 @@ export default async function handler(req, res) {
   }
 
   // 2. Neue Daten hinzufügen
+  if (existingData[user]) {
+    return res.status(409).json({ error: "Antwort wurde bereits gespeichert." });
+  }
+  
   existingData[user] = answers;
 
   const updatedContent = Buffer.from(
