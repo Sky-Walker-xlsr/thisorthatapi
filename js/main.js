@@ -189,6 +189,13 @@ window.sendMessage = function () {
   });
 };
 
+chatInput?.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
 // Funktion zur Darstellung einer Nachricht
 function renderMessage(text, fromUser) {
   const msgDiv = document.createElement("div");
