@@ -2,6 +2,7 @@ export default async function handler(req, res) {
   const quiz = req.query.quiz;
 
   if (!quiz) {
+    console.warn("❌ Kein Quizname angegeben.");
     return res.status(400).json({ error: "Fehlender Quizname." });
   }
 
@@ -22,15 +23,26 @@ export default async function handler(req, res) {
     });
 
     if (!response.ok) {
-      throw new Error(`Datei nicht gefunden (${response.status})`);
+      console.warn(`⚠️ Datei nicht gefunden (${response.status}) für ${filePath}`);
+      return res.status(200).json({});
     }
 
     const json = await response.json();
     const content = Buffer.from(json.content, "base64").toString("utf-8");
-    const data = JSON.parse(content);
 
+    let data;
+    try {
+      data = JSON.parse(content);
+    } catch (parseError) {
+      console.error("❌ Fehler beim Parsen von JSON:", parseError);
+      console.log("📦 Originaler Inhalt:", content);
+      return res.status(500).json({ error: "Ungültiges JSON-Format." });
+    }
+
+    console.log("✅ Geladene Daten:", data);
     return res.status(200).json(data);
   } catch (err) {
-    return res.status(200).json({}); // leere Antwort wenn Datei nicht existiert
+    console.error("❌ Fehler beim Laden von", filePath, err);
+    return res.status(200).json({});
   }
 }
