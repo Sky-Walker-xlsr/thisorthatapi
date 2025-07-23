@@ -9,8 +9,34 @@
       "question": "Erdbeere oder Kirsche?",
       "img1": "images/strawberry.jpg",
       "img2": "images/cherry.jpg"
+    },
+    {
+      "question": "Ananas oder Mango?",
+      "img1": "images/pineapple.jpg",
+      "img2": "images/mango.jpg"
+    },
+    {
+      "question": "Wassermelone oder Honigmelone?",
+      "img1": "images/watermelon.jpg",
+      "img2": "images/honeydew.jpg"
+    },
+    {
+      "question": "Traube oder Heidelbeere?",
+      "img1": "images/grape.jpg",
+      "img2": "images/blueberry.jpg"
+    },
+    {
+      "question": "Orange oder Grapefruit?",
+      "img1": "images/orange.jpg",
+      "img2": "images/grapefruit.jpg"
+    },
+    {
+      "question": "Pfirsich oder Nektarine?",
+      "img1": "images/peach.jpg",
+      "img2": "images/nectarine.jpg"
     }
   ],
+  
   "food": [
     {
       "question": "Pizza oder Sushi?",
