@@ -74,7 +74,8 @@ input {
 
 .quiz-img {
     width: 40%;
-    max-width: 300px;
+    max-width: 600px;
+    max-hight: 600px;
     border-radius: 20px;
     cursor: pointer;
 }
