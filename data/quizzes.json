@@ -1,0 +1,26 @@
+{
+  "fruits": [
+    {
+      "question": "Apfel oder Banane?",
+      "img1": "images/apple.jpg",
+      "img2": "images/banana.jpg"
+    },
+    {
+      "question": "Erdbeere oder Kirsche?",
+      "img1": "images/strawberry.jpg",
+      "img2": "images/cherry.jpg"
+    }
+  ],
+  "food": [
+    {
+      "question": "Pizza oder Sushi?",
+      "img1": "images/pizza.jpg",
+      "img2": "images/sushi.jpg"
+    },
+    {
+      "question": "Pasta oder Burger?",
+      "img1": "images/pasta.jpg",
+      "img2": "images/burger.jpg"
+    }
+  ]
+}
