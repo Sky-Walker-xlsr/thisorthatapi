@@ -1,11 +1,11 @@
-export default async function handler(req, res) {
+export default async function handler(req, res) { 
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Nur POST erlaubt." });
   }
 
-  const { quiz, user, answers } = req.body;
+  const { quiz, user, answers, text } = req.body;
 
-  if (!quiz || !user || !answers) {
+  if (!quiz || !user || (!answers && !text)) {
     return res.status(400).json({ error: "Fehlende Felder." });
   }
 
@@ -40,11 +40,18 @@ export default async function handler(req, res) {
   }
 
   // 2. Neue Daten hinzufügen
-  if (existingData[user]) {
-    return res.status(409).json({ error: "Antwort wurde bereits gespeichert." });
+  if (answers) {
+    if (existingData[user]) {
+      return res.status(409).json({ error: "Antwort wurde bereits gespeichert." });
+    }
+    existingData[user] = answers;
   }
-  
-  existingData[user] = answers;
+
+  if (text) {
+    if (!existingData._chat) existingData._chat = {};
+    const timestamp = Date.now();
+    existingData._chat[`msg_${timestamp}`] = { user, text };
+  }
 
   const updatedContent = Buffer.from(
     JSON.stringify(existingData, null, 2)
