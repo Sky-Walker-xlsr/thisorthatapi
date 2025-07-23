@@ -130,7 +130,7 @@ function initApp() {
       const start = document.createElement("a");
       start.className = "quiz-card";
       start.href = `quiz.html?quiz=${quizName}`;
-      start.textContent = `This or That: ${quizName.charAt(0).toUpperCase() + quizName.slice(1)}`;
+      start.textContent = `${quizName.charAt(0).toUpperCase() + quizName.slice(1)}`;
       start.style.backgroundColor = bgColors[index % bgColors.length];
       quizListContainer?.appendChild(start);
 
@@ -142,7 +142,7 @@ function initApp() {
             const done = document.createElement("a");
             done.className = "quiz-card";
             done.href = `results.html?quiz=${quizName}`;
-            done.textContent = `Abgeschlossen: ${quizName.charAt(0).toUpperCase() + quizName.slice(1)}`;
+            done.textContent = `${quizName.charAt(0).toUpperCase() + quizName.slice(1)}`;
             done.style.backgroundColor = bgColors[index % bgColors.length];
             completedContainer?.appendChild(done);
           }
