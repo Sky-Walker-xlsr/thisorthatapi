@@ -62,7 +62,17 @@ fetch(`/api/load?quiz=${quizName}`)
             answers.forEach((choice, i) => {
                 const q = quiz[i];
                 if (!q) return;
-                const img = parseInt(choice) === 1 ? q.img1 : q.img2;
+
+                // NEU: statt parseInt(choice) -> Vergleich mit 'left'/'right'
+                let img = "";
+                if (choice === "left") {
+                    img = q.img1;
+                } else if (choice === "right") {
+                    img = q.img2;
+                } else {
+                    img = ""; // fallback (optional)
+                }
+
                 html += `
                     <div class="result-question">${q.question}</div>
                     <div class="result-row">
