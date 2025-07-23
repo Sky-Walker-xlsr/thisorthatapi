@@ -46,10 +46,11 @@ if (location.pathname.endsWith("quiz.html") && quizName && user) {
         }
     }
 
-    img1?.addEventListener("click", () => select(1));
-    img2?.addEventListener("click", () => select(2));
+    img1?.addEventListener("click", () => select("left"));   // <-- angepasst
+    img2?.addEventListener("click", () => select("right"));  // <-- angepasst
     loadQuestion();
 }
+
 
 
 // === RESULTS-SEITE ===
