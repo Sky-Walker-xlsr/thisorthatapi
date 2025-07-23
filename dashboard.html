@@ -2,29 +2,32 @@
 <html lang="de">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Quiz Auswahl</title>
-    <link rel="stylesheet" href="css/main.css">
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Quiz Auswahl</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Fester Header mit Dashboard-Button -->
-    <header class="site-header">
-        <a href="index.html" class="nav-button">Logout</a>
-    </header>
+  <!-- Fester Header mit Logout -->
+  <header class="site-header">
+    <a href="index.html" class="nav-button">Logout</a>
+  </header>
 
-    <div class="container">
-        <h1>Willkommen <span id="userName"></span></h1>
+  <div class="container">
+    <h1>Willkommen <span id="userName"></span></h1>
 
-        <div id="quizList" class="quiz-grid"></div>
+    <!-- Verfügbare Quizzes -->
+    <h2>Verfügbare Quizzes</h2>
+    <div id="quizList" class="quiz-grid"></div>
 
-        <h2 style="margin-top: 50px;">Abgeschlossene Quizzes</h2>
-        <div id="completedQuizzes" class="quiz-grid"></div>
-    </div>
+    <!-- Abgeschlossene Quizzes -->
+    <h2 style="margin-top: 50px;">Abgeschlossene Quizzes</h2>
+    <div id="completedQuizzes" class="quiz-grid"></div>
+  </div>
 
-    <!-- 💡 Nur diesen einen Script-Tag brauchst du -->
-    <script src="js/main.js"></script>
+  <!-- 💡 Zentrale JS-Logik -->
+  <script src="js/main.js"></script>
 </body>
 
 </html>
