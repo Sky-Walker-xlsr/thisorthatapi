@@ -175,14 +175,16 @@ window.sendMessage = function () {
   const msg = chatInput.value.trim();
   if (!msg) return;
 
-  const chatData = { quiz: quizName, user: currentUser, text: msg };
-
-  fetch("/api/save?quiz=chat_" + quizName + "&user=" + currentUser, {
+  fetch("/api/save", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(chatData)
+    body: JSON.stringify({
+      quiz: quizName,
+      user,
+      text: msg
+    })
   }).then(() => {
-    renderMessage(msg, currentUser);
+    renderMessage(msg, user);
     chatInput.value = "";
   });
 };
