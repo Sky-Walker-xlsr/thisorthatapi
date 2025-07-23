@@ -1,47 +1,42 @@
-// Login-Funktion
+// main.js – Zentrale Logik für Login, Quiz, Resultate und Chat
+
 const users = [
   { username: "Amelie", password: "05.07.2025" },
   { username: "Yannick", password: "05.07.2025" }
 ];
 
-// ➤ Login-Formular auswerten
+const params = new URLSearchParams(location.search);
+const quizName = params.get("quiz");
+const user = localStorage.getItem("user");
+
+// 🟡 1. Login-Handling (nur auf login.html vorhanden)
 document.getElementById("loginForm")?.addEventListener("submit", function (e) {
   e.preventDefault();
-
-  const user = document.getElementById("username").value;
+  const username = document.getElementById("username").value;
   const pw = document.getElementById("password").value;
-
-  // Benutzer aus Liste suchen
-  const valid = users.find(u => u.username === user && u.password === pw);
+  const valid = users.find(u => u.username === username && u.password === pw);
 
   if (valid) {
-    localStorage.setItem("user", user); // Nutzer merken (für später)
-    location.href = "dashboard.html";   // weiterleiten ins Dashboard
+    localStorage.setItem("user", username);
+    location.href = "dashboard.html";
   } else {
     document.getElementById("errorMsg").textContent = "Falsche Anmeldedaten.";
   }
 });
 
-// Quizzes Laden
-const params = new URLSearchParams(location.search);
-const quizName = params.get("quiz");
-const user = localStorage.getItem("user");
-
-let quizzes = {}; // wird befüllt mit den Quizfragen
-
-// ➤ Zuerst die zentrale Fragen-Datei laden
-fetch('/data/quizzes.json')
+// 🟢 2. Quizdaten laden und danach starten
+let quizzes = {};
+fetch("/data/quizzes.json")
   .then(res => res.json())
   .then(data => {
     quizzes = data;
-    initQuiz(); // wenn geladen, geht's los
+    initApp();
   })
-  .catch(err => {
-    console.error("Fehler beim Laden der Quizdaten:", err);
-  });
+  .catch(err => console.error("Quizdaten konnten nicht geladen werden:", err));
 
-// Quizseite
-function initQuiz() {
+// 🟢 3. Gesamte App-Logik in diese Funktion
+function initApp() {
+  // === QUIZ-SEITE ===
   if (location.pathname.endsWith("quiz.html") && quizName && user) {
     const quizData = quizzes[quizName];
     let index = 0;
@@ -51,7 +46,6 @@ function initQuiz() {
     const img1 = document.getElementById("img1");
     const img2 = document.getElementById("img2");
 
-    // ➤ Aktuelle Frage anzeigen
     function loadQuestion() {
       const q = quizData[index];
       questionEl.textContent = q.question;
@@ -59,15 +53,13 @@ function initQuiz() {
       img2.src = q.img2;
     }
 
-    // ➤ Antwort speichern und nächste Frage laden
     function select(choice) {
       answers[index] = choice;
       index++;
       if (index < quizData.length) {
         loadQuestion();
       } else {
-        // ➤ Wenn alle Fragen beantwortet: auf GitHub speichern
-        fetch(`/api/save`, {
+        fetch("/api/save", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ quiz: quizName, user, answers })
@@ -81,66 +73,88 @@ function initQuiz() {
     img2?.addEventListener("click", () => select("right"));
     loadQuestion();
   }
-}
 
-// Resultatseite
-if (location.pathname.includes("results.html") && quizName) {
-  const resultDiv = document.getElementById("results");
+  // === RESULTS-SEITE ===
+  if (location.pathname.includes("results.html") && quizName) {
+    const resultDiv = document.getElementById("results");
+    fetch(`/api/load?quiz=${quizName}`)
+      .then(res => res.json())
+      .then(data => {
+        const quizData = quizzes[quizName];
+        if (!quizData || !data || Object.keys(data).length < 1) {
+          resultDiv.innerHTML = "<p>Keine Ergebnisse gefunden.</p>";
+          return;
+        }
 
-  fetch(`/api/load?quiz=${quizName}`)
-    .then(res => res.json())
-    .then(data => {
-      const quizData = quizzes[quizName];
-      if (!quizData || !data || Object.keys(data).length < 1) {
-        resultDiv.innerHTML = "<p>Keine Ergebnisse gefunden.</p>";
-        return;
-      }
+        let html = "";
+        Object.entries(data).forEach(([user, answers]) => {
+          html += `<h3>${user}</h3>`;
+          answers.forEach((choice, i) => {
+            const q = quizData[i];
+            let img = "";
+            if (choice === "left") img = q.img1;
+            else if (choice === "right") img = q.img2;
 
-      let html = "";
-      Object.entries(data).forEach(([user, answers]) => {
-        html += `<h3>${user}</h3>`;
-        answers.forEach((choice, i) => {
-          const q = quizData[i];
-          const img = choice === "left" ? q.img1 : q.img2;
-          html += `
-            <p>${q.question}</p>
-            <img src="${img}" style="width:150px;height:150px;border-radius:15px;"><hr>
-          `;
+            html += `
+              <p>${q.question}</p>
+              <img src="${img}" style="width:150px;height:150px;border-radius:15px;"><hr>
+            `;
+          });
         });
+        resultDiv.innerHTML = html;
+      })
+      .catch(err => {
+        document.getElementById("results").innerHTML = "<p>Fehler beim Laden der Ergebnisse.</p>";
+        console.error(err);
       });
+  }
 
-      resultDiv.innerHTML = html;
-    })
-    .catch(err => {
-      resultDiv.innerHTML = "<p>Fehler beim Laden der Ergebnisse.</p>";
-      console.error(err);
+  // === DASHBOARD: Begrüssung + abgeschlossene Quizzes ===
+  if (location.pathname.endsWith("dashboard.html")) {
+    document.getElementById("userName").textContent = user || "Gast";
+
+    const completedContainer = document.getElementById("completedQuizzes");
+    const bgColors = ["#FF6B6B", "#4ECDC4", "#FFD93D", "#B39CD0"];
+    const quizNames = Object.keys(quizzes);
+
+    quizNames.forEach((quizName, index) => {
+      fetch(`/api/load?quiz=${quizName}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data[user]) {
+            const link = document.createElement("a");
+            link.className = "quiz-card";
+            link.href = `results.html?quiz=${quizName}`;
+            link.textContent = `This or That: ${quizName.charAt(0).toUpperCase() + quizName.slice(1)}`;
+            link.style.backgroundColor = bgColors[index % bgColors.length];
+            completedContainer.appendChild(link);
+          }
+        });
     });
-}
+  }
 
-// Chatfunktion
-const chatBox = document.getElementById("chatMessages");
-const chatInput = document.getElementById("chatInput");
+  // === CHAT ===
+  const chatBox = document.getElementById("chatMessages");
+  const chatInput = document.getElementById("chatInput");
 
-function sendMessage() {
-  const msg = chatInput.value.trim();
-  if (!msg) return;
+  function sendMessage() {
+    const msg = chatInput.value.trim();
+    if (!msg) return;
 
-  const chatData = { quiz: quizName, user, text: msg };
+    const chatData = { quiz: quizName, user, text: msg };
+    fetch("/api/save?quiz=chat_" + quizName + "&user=" + user, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(chatData)
+    }).then(() => location.reload());
+  }
 
-  // ➤ Chatnachricht speichern
-  fetch("/api/save?quiz=chat_" + quizName + "&user=" + user, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(chatData)
-  }).then(() => location.reload());
-}
-
-// ➤ Chat laden (wenn Chatbox vorhanden)
-if (chatBox) {
-  fetch(`/api/load?quiz=chat_${quizName}`)
-    .then(res => res.json())
-    .then(chat => {
-      const messages = Object.values(chat || {});
-      chatBox.innerHTML = messages.map(m => `<p><strong>${m.user}:</strong> ${m.text}</p>`).join("");
-    });
+  if (chatBox) {
+    fetch(`/api/load?quiz=chat_${quizName}`)
+      .then(res => res.json())
+      .then(chat => {
+        const messages = Object.values(chat || {});
+        chatBox.innerHTML = messages.map(m => `<p><strong>${m.user}:</strong> ${m.text}</p>`).join("");
+      });
+  }
 }
