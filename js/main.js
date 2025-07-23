@@ -1,15 +1,17 @@
-// main.js – Zentrale Logik für Login, Quiz, Resultate und Chat
+// === main.js – Zentrale Logik für Login, Quiz, Ergebnisse & Chat ===
 
+// 🟢 Benutzer-Login-Daten
 const users = [
   { username: "Amelie", password: "05.07.2025" },
   { username: "Yannick", password: "05.07.2025" }
 ];
 
+// 🟢 Nützliche URL- und User-Infos
 const params = new URLSearchParams(location.search);
 const quizName = params.get("quiz");
 const user = localStorage.getItem("user");
 
-// 🟡 1. Login-Handling (nur auf login.html vorhanden)
+// === LOGIN-FUNKTION (nur auf login.html aktiv) ===
 document.getElementById("loginForm")?.addEventListener("submit", function (e) {
   e.preventDefault();
   const username = document.getElementById("username").value;
@@ -24,18 +26,19 @@ document.getElementById("loginForm")?.addEventListener("submit", function (e) {
   }
 });
 
-// 🟢 2. Quizdaten laden und danach starten
+// === QUIZDATEN LADEN und App starten ===
 let quizzes = {};
 fetch("/data/quizzes.json")
   .then(res => res.json())
   .then(data => {
     quizzes = data;
-    initApp();
+    initApp(); // App starten wenn Daten da
   })
   .catch(err => console.error("Quizdaten konnten nicht geladen werden:", err));
 
-// 🟢 3. Gesamte App-Logik in diese Funktion
+// === HAUPTFUNKTION: Alles Weitere passiert hier ===
 function initApp() {
+
   // === QUIZ-SEITE ===
   if (location.pathname.endsWith("quiz.html") && quizName && user) {
     const quizData = quizzes[quizName];
@@ -59,6 +62,7 @@ function initApp() {
       if (index < quizData.length) {
         loadQuestion();
       } else {
+        // Wenn alle beantwortet → speichern und weiterleiten
         fetch("/api/save", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -77,6 +81,7 @@ function initApp() {
   // === RESULTS-SEITE ===
   if (location.pathname.includes("results.html") && quizName) {
     const resultDiv = document.getElementById("results");
+
     fetch(`/api/load?quiz=${quizName}`)
       .then(res => res.json())
       .then(data => {
@@ -101,43 +106,55 @@ function initApp() {
             `;
           });
         });
+
         resultDiv.innerHTML = html;
       })
       .catch(err => {
-        document.getElementById("results").innerHTML = "<p>Fehler beim Laden der Ergebnisse.</p>";
+        resultDiv.innerHTML = "<p>Fehler beim Laden der Ergebnisse.</p>";
         console.error(err);
       });
   }
 
-  // === DASHBOARD: Begrüssung + abgeschlossene Quizzes ===
+  // === DASHBOARD-SEITE ===
   if (location.pathname.endsWith("dashboard.html")) {
+    // Benutzername einblenden
     document.getElementById("userName").textContent = user || "Gast";
 
+    const quizListContainer = document.getElementById("quizList");
     const completedContainer = document.getElementById("completedQuizzes");
-    const bgColors = ["#FF6B6B", "#4ECDC4", "#FFD93D", "#B39CD0"];
+    const bgColors = ["#FF6B6B", "#4ECDC4", "#FFD93D", "#B39CD0", "#F7A072"];
     const quizNames = Object.keys(quizzes);
 
     quizNames.forEach((quizName, index) => {
+      // Quiz-Startkarte
+      const start = document.createElement("a");
+      start.className = "quiz-card";
+      start.href = `quiz.html?quiz=${quizName}`;
+      start.textContent = `This or That: ${quizName.charAt(0).toUpperCase() + quizName.slice(1)}`;
+      start.style.backgroundColor = bgColors[index % bgColors.length];
+      quizListContainer?.appendChild(start);
+
+      // Prüfen ob schon abgeschlossen
       fetch(`/api/load?quiz=${quizName}`)
         .then(res => res.json())
         .then(data => {
           if (data[user]) {
-            const link = document.createElement("a");
-            link.className = "quiz-card";
-            link.href = `results.html?quiz=${quizName}`;
-            link.textContent = `This or That: ${quizName.charAt(0).toUpperCase() + quizName.slice(1)}`;
-            link.style.backgroundColor = bgColors[index % bgColors.length];
-            completedContainer.appendChild(link);
+            const done = document.createElement("a");
+            done.className = "quiz-card";
+            done.href = `results.html?quiz=${quizName}`;
+            done.textContent = `Abgeschlossen: ${quizName.charAt(0).toUpperCase() + quizName.slice(1)}`;
+            done.style.backgroundColor = bgColors[index % bgColors.length];
+            completedContainer?.appendChild(done);
           }
         });
     });
   }
 
-  // === CHAT ===
+  // === CHAT (nur auf results.html) ===
   const chatBox = document.getElementById("chatMessages");
   const chatInput = document.getElementById("chatInput");
 
-  function sendMessage() {
+  window.sendMessage = function () {
     const msg = chatInput.value.trim();
     if (!msg) return;
 
@@ -147,7 +164,7 @@ function initApp() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(chatData)
     }).then(() => location.reload());
-  }
+  };
 
   if (chatBox) {
     fetch(`/api/load?quiz=chat_${quizName}`)
