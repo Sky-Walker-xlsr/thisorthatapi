@@ -1,5 +1,5 @@
 {
-  "fruits": [
+  "Fruits": [
     {
       "question": "Apfel oder Banane?",
       "img1": "images/apple.jpg",
@@ -37,16 +37,42 @@
     }
   ],
   
-  "food": [
-    {
-      "question": "Pizza oder Sushi?",
-      "img1": "images/pizza.jpg",
-      "img2": "images/sushi.jpg"
-    },
-    {
-      "question": "Pasta oder Burger?",
-      "img1": "images/pasta.jpg",
-      "img2": "images/burger.jpg"
-    }
-  ]
+"couples": [
+  {
+    "question": "Netflix oder Kinoabend?",
+    "img1": "images/netflix.jpg",
+    "img2": "images/cinema.jpg"
+  },
+  {
+    "question": "Strandurlaub oder Städtetrip?",
+    "img1": "images/beach.jpg",
+    "img2": "images/citytrip.jpg"
+  },
+  {
+    "question": "Kochen oder Essen gehen?",
+    "img1": "images/cooking.jpg",
+    "img2": "images/restaurant.jpg"
+  },
+  {
+    "question": "Morgens kuscheln oder abends?",
+    "img1": "images/morning.jpg",
+    "img2": "images/evening.jpg"
+  },
+  {
+    "question": "Romantischer Film oder Actionfilm?",
+    "img1": "images/romance.jpg",
+    "img2": "images/action.jpg"
+  },
+  {
+    "question": "Spazieren gehen oder zusammen chillen?",
+    "img1": "images/walk.jpg",
+    "img2": "images/chill.jpg"
+  },
+  {
+    "question": "Früh ins Bett oder lange wach bleiben?",
+    "img1": "images/sleep_early.jpg",
+    "img2": "images/stay_late.jpg"
+  }
+]
+
 }
