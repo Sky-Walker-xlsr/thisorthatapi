@@ -1,16 +1,24 @@
-const quizzes = {
-    fruits: [
-        { question: "Apfel oder Banane?", img1: "https://source.unsplash.com/600x900/?apple", img2: "https://source.unsplash.com/600x900/?banana" },
-        { question: "Erdbeere oder Kirsche?", img1: "https://source.unsplash.com/600x900/?strawberry", img2: "https://source.unsplash.com/600x900/?cherry" }
-    ]
-};
-
 const params = new URLSearchParams(location.search);
 const quizName = params.get("quiz");
 const user = localStorage.getItem("user");
 
-// === QUIZ-SEITE ===
-if (location.pathname.endsWith("quiz.html") && quizName && user) {
+let quizzes = {};  // hier kommen später die Daten rein
+
+// 🟡 1. Zuerst Quizdaten laden
+fetch('/data/quizzes.json')
+  .then(res => res.json())
+  .then(data => {
+    quizzes = data;
+    initQuiz();  // jetzt geht's los
+  })
+  .catch(err => {
+    console.error("Fehler beim Laden der Quizdaten:", err);
+  });
+
+// 🟢 2. Der ganze restliche Code kommt in eine Funktion:
+function initQuiz() {
+  // === QUIZ-SEITE ===
+  if (location.pathname.endsWith("quiz.html") && quizName && user) {
     const quizData = quizzes[quizName];
     let index = 0;
     let answers = [];
@@ -20,35 +28,36 @@ if (location.pathname.endsWith("quiz.html") && quizName && user) {
     const img2 = document.getElementById("img2");
 
     function loadQuestion() {
-        const q = quizData[index];
-        questionEl.textContent = q.question;
-        img1.src = q.img1;
-        img2.src = q.img2;
+      const q = quizData[index];
+      questionEl.textContent = q.question;
+      img1.src = q.img1;
+      img2.src = q.img2;
     }
 
     function select(choice) {
-        answers[index] = choice;
-        index++;
-        if (index < quizData.length) {
-            loadQuestion();
-        } else {
-            fetch(`/api/save`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                quiz: quizName,
-                user: user,
-                answers: answers
-              })
-            }).then(() => {
-                location.href = `results.html?quiz=${quizName}`;
-            });
-        }
+      answers[index] = choice;
+      index++;
+      if (index < quizData.length) {
+        loadQuestion();
+      } else {
+        fetch(`/api/save`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            quiz: quizName,
+            user: user,
+            answers: answers
+          })
+        }).then(() => {
+          location.href = `results.html?quiz=${quizName}`;
+        });
+      }
     }
 
-    img1?.addEventListener("click", () => select("left"));   // <-- angepasst
-    img2?.addEventListener("click", () => select("right"));  // <-- angepasst
+    img1?.addEventListener("click", () => select("left"));
+    img2?.addEventListener("click", () => select("right"));
     loadQuestion();
+  }
 }
 
 
