@@ -22,9 +22,12 @@
     <div id="chatBox">
       <h3>Diskussion</h3>
       <div id="chatMessages" class="chat-messages"></div>
-      <input type="text" id="chatInput" placeholder="Nachricht schreiben...">
-      <button onclick="sendMessage()">Senden</button>
+      <div class="chat-input-row">
+        <input type="text" id="chatInput" placeholder="Nachricht schreiben...">
+        <button onclick="sendMessage()" class="chat-send-button">Senden</button>
+      </div>
     </div>
+
   </div>
 
   <script src="js/main.js"></script>
