@@ -78,7 +78,7 @@ function initApp() {
     loadQuestion();
   }
 
-// === RESULTS-SEITE mit Vergleich links/rechts ===
+// === RESULTS-SEITE mit zentrierten Namen & Frage ===
 if (location.pathname.includes("results.html") && quizName) {
   const resultDiv = document.getElementById("results");
 
@@ -86,7 +86,7 @@ if (location.pathname.includes("results.html") && quizName) {
     .then(res => res.json())
     .then(data => {
       const quizData = quizzes[quizName];
-      if (!quizData || !data || Object.keys(data).length < 2) {
+      if (!quizData || data === null || Object.keys(data).length < 2) {
         resultDiv.innerHTML = "<p>Mindestens zwei Ergebnisse nötig für den Vergleich.</p>";
         return;
       }
@@ -95,23 +95,24 @@ if (location.pathname.includes("results.html") && quizName) {
       const answers1 = data[user1];
       const answers2 = data[user2];
 
-      let html = `<div class="result-compare-header">
-                    <div>${user1}</div>
-                    <div>${user2}</div>
-                  </div>`;
+      let html = `
+        <div class="result-compare-header">
+          <div class="user-label">${user1}</div>
+          <div class="user-label">${user2}</div>
+        </div>
+      `;
 
       quizData.forEach((q, i) => {
         const choice1 = answers1[i] === "left" ? q.img1 : q.img2;
         const choice2 = answers2[i] === "left" ? q.img1 : q.img2;
 
         html += `
+          <div class="result-question-center">${q.question}</div>
           <div class="result-row">
             <div class="result-answer">
-              <div class="result-question">${q.question}</div>
               <img src="${choice1}" alt="Antwort von ${user1}">
             </div>
             <div class="result-answer">
-              <div class="result-question invisible">${q.question}</div>
               <img src="${choice2}" alt="Antwort von ${user2}">
             </div>
           </div>
@@ -125,7 +126,6 @@ if (location.pathname.includes("results.html") && quizName) {
       console.error(err);
     });
 }
-
 
 
   // === DASHBOARD-SEITE ===
