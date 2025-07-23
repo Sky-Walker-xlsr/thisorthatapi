@@ -39,6 +39,11 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: "Ungültiges JSON-Format." });
     }
 
+    // Optional: Sicherstellen, dass _chat immer existiert, falls du es brauchst
+    if (!data._chat) {
+      data._chat = [];
+    }
+
     console.log("✅ Geladene Daten:", data);
     return res.status(200).json(data);
   } catch (err) {
