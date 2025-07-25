@@ -163,6 +163,27 @@ if (location.pathname.includes("results.html") && quizName) {
     });
   }
 
+  document.addEventListener("DOMContentLoaded", () => {
+  const testBtn = document.getElementById("test-save-button");
+  if (testBtn) {
+    testBtn.addEventListener("click", async () => {
+      const res = await fetch("/api/save.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          action: "githubTestSave"
+        })
+      });
+
+      const result = await res.json();
+      alert(result.message || "Fertig.");
+    });
+  }
+});
+
+
 // === CHAT (nur auf results.html) ===
 const chatBox = document.getElementById("chatMessages");
 const chatInput = document.getElementById("chatInput");
