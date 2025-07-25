@@ -52,21 +52,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const questionBlocks = document.querySelectorAll(".question-block");
     const questions = [];
 
-    for (const block of questionBlocks) {
-      const question = block.querySelector(".question").value.trim();
-      const search1 = block.querySelector(".img1search").value.trim();
-      const search2 = block.querySelector(".img2search").value.trim();
+for (const block of questionBlocks) {
+  const qEl = block.querySelector(".question");
+  const i1El = block.querySelector(".img1search");
+  const i2El = block.querySelector(".img2search");
 
-      if (!question || !search1 || !search2) {
-        statusEl.textContent = "⚠️ Bitte alle Felder ausfüllen.";
-        return;
-      }
+  if (!qEl || !i1El || !i2El) {
+    statusEl.textContent = "⚠️ Fehler: Felder konnten nicht gelesen werden.";
+    return;
+  }
 
-      const img1 = await fetchPixabayImage(search1);
-      const img2 = await fetchPixabayImage(search2);
+  const question = qEl.value.trim();
+  const search1 = i1El.value.trim();
+  const search2 = i2El.value.trim();
 
-      questions.push({ question, img1, img2 });
-    }
+  if (!question || !search1 || !search2) {
+    statusEl.textContent = "⚠️ Bitte alle Felder ausfüllen.";
+    return;
+  }
+
+  const img1 = await fetchPixabayImage(search1);
+  const img2 = await fetchPixabayImage(search2);
+
+  questions.push({ question, img1, img2 });
+}
 
     const payload = {
       quiz: "quizzes",
