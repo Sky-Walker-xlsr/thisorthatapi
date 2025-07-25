@@ -72,47 +72,5 @@
       "img1": "images/sleep_early.jpg",
       "img2": "images/stay_late.jpg"
     }
-  ],
-  "Travel Dreams": [
-    {
-      "question": "Strand oder Berge",
-      "img1": "https://pixabay.com/get/ga6d7062306febed58eace828dc4eebd1760c94abfcc3fc6a48e9ce64abfe40324ea56496f4ef6ee92aedc22284ab143445abb31dceac8614abf3fc4ef8c1e57f_640.jpg",
-      "img2": "https://pixabay.com/get/gdbcb7b8132b57a4994053b55f4f63e4543f098d4a17dccf5078ac99011f300af9137b295c99156124c4cb3e5e438d4539c736300963099e9004119c79e940d2f_640.jpg"
-    },
-    {
-      "question": "New York oder Tokyo",
-      "img1": "https://pixabay.com/get/ge72acc86c97e2b38c77a729b6821607c9063c20e81a7eb338398f01b175954b774a8f9418b5ce1538646161b898c8ae7_640.jpg",
-      "img2": "https://pixabay.com/get/g3a7a2792958547a6568273b9665877a39ab5ee43956dbbebb9962daf17094c353e378c7de49622f6b43661ef3784dabb8269a52e376ca889ecd2653e9e118bde_640.jpg"
-    },
-    {
-      "question": "Roadtrip oder Flugreise",
-      "img1": "https://via.placeholder.com/600x900?text=Kein+Bild",
-      "img2": "https://via.placeholder.com/600x900?text=Kein+Bild"
-    },
-    {
-      "question": "Safari oder Dschungel",
-      "img1": "https://via.placeholder.com/600x900?text=Kein+Bild",
-      "img2": "https://via.placeholder.com/600x900?text=Kein+Bild"
-    },
-    {
-      "question": "Zelten oder Hotel",
-      "img1": "https://via.placeholder.com/600x900?text=Kein+Bild",
-      "img2": "https://via.placeholder.com/600x900?text=Kein+Bild"
-    },
-    {
-      "question": "Island oder Thailand",
-      "img1": "https://pixabay.com/get/g9d4c0432ad3a417a57a68f4e51400195e3d70f354f29cb9ddd0aa66753504f71675bf215fd69518608ce9ace9645b640200d3ba1f50124fd63323f5249d5aa9f_640.jpg",
-      "img2": "https://via.placeholder.com/600x900?text=Kein+Bild"
-    },
-    {
-      "question": "Fahrrad oder Motorrad",
-      "img1": "https://via.placeholder.com/600x900?text=Kein+Bild",
-      "img2": "https://via.placeholder.com/600x900?text=Kein+Bild"
-    },
-    {
-      "question": "Citytrip oder Natururlaub",
-      "img1": "https://via.placeholder.com/600x900?text=Kein+Bild",
-      "img2": "https://via.placeholder.com/600x900?text=Kein+Bild"
-    }
   ]
 }
