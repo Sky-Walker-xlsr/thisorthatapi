@@ -371,3 +371,21 @@ input {
   margin-top: -10px;
   margin-right: -10px;
 }
+
+#add-btn-wrapper {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.button-row {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.button-row .button {
+  font-size: 1em;
+}
