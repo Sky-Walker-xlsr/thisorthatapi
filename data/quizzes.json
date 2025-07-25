@@ -72,5 +72,12 @@
       "img1": "images/sleep_early.jpg",
       "img2": "images/stay_late.jpg"
     }
+  ],
+  "Bau": [
+    {
+      "question": "Welches Tool wird öfters benutzt",
+      "img1": "https://source.unsplash.com/600x900/?hammer",
+      "img2": "https://source.unsplash.com/600x900/?screwdriver"
+    }
   ]
 }
