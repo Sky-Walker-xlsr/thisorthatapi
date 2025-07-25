@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return div;
   }
 
-  // Ersten Block beim Laden einfügen
   if (questionsContainer) {
     questionsContainer.appendChild(createQuestionBlock());
   }
@@ -52,36 +51,36 @@ document.addEventListener("DOMContentLoaded", () => {
     const questionBlocks = document.querySelectorAll(".question-block");
     const questions = [];
 
-for (const block of questionBlocks) {
-  const qInput = block.querySelector("input.question");
-  const i1Input = block.querySelector("input.img1search");
-  const i2Input = block.querySelector("input.img2search");
+    for (const block of questionBlocks) {
+      const qInput = block.querySelector("input.question");
+      const i1Input = block.querySelector("input.img1search");
+      const i2Input = block.querySelector("input.img2search");
 
-  if (!qInput || !i1Input || !i2Input) {
-    statusEl.textContent = "⚠️ Fehler: Felder konnten nicht gelesen werden.";
-    return;
-  }
+      if (!qInput || !i1Input || !i2Input) {
+        statusEl.textContent = "⚠️ Fehler: Felder konnten nicht gelesen werden.";
+        return;
+      }
 
-  const question = qInput.value.trim();
-  const search1 = i1Input.value.trim();
-  const search2 = i2Input.value.trim();
+      const question = qInput.value.trim();
+      const search1 = i1Input.value.trim();
+      const search2 = i2Input.value.trim();
 
-  if (!question || !search1 || !search2) {
-    statusEl.textContent = "⚠️ Bitte alle Felder ausfüllen.";
-    return;
-  }
+      if (!question || !search1 || !search2) {
+        statusEl.textContent = "⚠️ Bitte alle Felder ausfüllen.";
+        return;
+      }
 
-  const img1 = await fetchPixabayImage(search1);
-  const img2 = await fetchPixabayImage(search2);
+      const img1 = await fetchPixabayImage(search1);
+      const img2 = await fetchPixabayImage(search2);
 
-  questions.push({ question, img1, img2 });
-}
-
+      questions.push({ question, img1, img2 });
+    }
 
     const payload = {
-      quiz: "quizzes",
-      newQuestions: questions,
-      targetCategory: quizName
+      file: "quizzes.json",
+      data: {
+        [quizName]: questions
+      }
     };
 
     try {
