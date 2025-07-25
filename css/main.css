@@ -28,11 +28,43 @@ body {
 .site-logo {
   width: 40px;             /* oder was du willst */
   height: 40px;
-  border-radius: 50%;      /* das macht's rund */
+  border-radius: 10%;      /* das macht's rund */
   object-fit: cover;       /* falls das Bild nicht quadratisch ist */
   margin-right: 10px;     /* Abstand zum Text */
   margin-top: 10px;  
 }
+
+.fab-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 100px;             /* doppelt so groß */
+  height: 100px;
+  border-radius: 50%;
+  background-color: #4B00B5; /* dein dunkles Lila */
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  z-index: 999;
+}
+
+.fab-button:hover {
+  transform: scale(1.05);
+}
+
+.fab-button span {
+  font-size: 64px;                  /* extra groß */
+  color: #9e6fff;                   /* helleres Lila für das "+" */
+  line-height: 1;
+  font-weight: bold;
+  font-family: Arial, sans-serif;  /* schön rundes Plus */
+  user-select: none;
+}
+
 
 .logo-container {
   display: flex;
