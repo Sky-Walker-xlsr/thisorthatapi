@@ -30,7 +30,8 @@ body {
   height: 40px;
   border-radius: 50%;      /* das macht's rund */
   object-fit: cover;       /* falls das Bild nicht quadratisch ist */
-  margin-right: 10px;      /* Abstand zum Text */
+  margin-right: 10px;     /* Abstand zum Text */
+  margin-top: 10px;  
 }
 
 .logo-container {
