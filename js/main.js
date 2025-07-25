@@ -243,103 +243,107 @@ if (chatBox) {
 
 // === ADDQUIZ.html ===
 document.addEventListener("DOMContentLoaded", () => {
-  if (location.pathname.endsWith("addquiz.html")) {
-    const form = document.getElementById("quizForm");
-    const statusEl = document.getElementById("status");
-    const questionsContainer = document.getElementById("questionsContainer");
-    const addQuestionBtn = document.getElementById("add-question-btn");
+  if (!location.pathname.endsWith("addquiz.html")) return;
 
-    // 🔍 Pixabay Bild holen
-    async function fetchPixabayImage(query) {
-      const apiKey = '51478566-b3d3000cd1ad295edfef73647';
-      try {
-        const res = await fetch(`https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(query)}&image_type=photo&per_page=3`);
-        const data = await res.json();
-        return data.hits?.[0]?.webformatURL || 'https://via.placeholder.com/600x900?text=Kein+Bild';
-      } catch (err) {
-        console.error("❌ Pixabay-Fehler:", err);
-        return 'https://via.placeholder.com/600x900?text=Fehler';
-      }
+  const form = document.getElementById("quizForm");
+  const statusEl = document.getElementById("status");
+  const questionsContainer = document.getElementById("questionsContainer");
+  const addQuestionBtn = document.getElementById("add-question-btn");
+
+  // 🔍 Pixabay Bild holen
+  async function fetchPixabayImage(query) {
+    const apiKey = '51478566-b3d3000cd1ad295edfef73647';
+    try {
+      const res = await fetch(`https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(query)}&image_type=photo&per_page=3`);
+      const data = await res.json();
+      return data.hits?.[0]?.webformatURL || 'https://via.placeholder.com/600x900?text=Kein+Bild';
+    } catch (err) {
+      console.error("❌ Pixabay-Fehler:", err);
+      return 'https://via.placeholder.com/600x900?text=Fehler';
+    }
+  }
+
+  // 🧱 Frage-Block erstellen
+  function createQuestionBlock() {
+    const block = document.createElement("div");
+    block.className = "question-block";
+    block.innerHTML = `
+      <label>Frage:</label>
+      <input type="text" class="question" placeholder="z.B. Apple oder Banana?" required>
+      <label>Bild 1 Suche:</label>
+      <input type="text" class="img1search" placeholder="apple" required>
+      <label>Bild 2 Suche:</label>
+      <input type="text" class="img2search" placeholder="banana" required>
+    `;
+    return block;
+  }
+
+  // ➕ Neue Frage hinzufügen
+  addQuestionBtn?.addEventListener("click", () => {
+    const block = createQuestionBlock();
+    questionsContainer.appendChild(block);
+  });
+
+  // 💾 Beim Absenden speichern
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const quizName = document.getElementById("quizname").value.trim();
+    if (!quizName) {
+      statusEl.textContent = "⚠️ Bitte Quiznamen eingeben.";
+      return;
     }
 
-    // 🔧 Frage-Block erzeugen
-    function createQuestionBlock() {
-      const block = document.createElement("div");
-      block.className = "question-block";
-      block.innerHTML = `
-        <label>Frage:</label>
-        <input type="text" class="question" placeholder="Bsp. Apfel oder Orange? (keine Umlaute)" required />
-        <label>Bild 1 Suche:</label>
-        <input type="text" class="img1search" placeholder="apple (bitte in englisch und ohne Umlaute)" required />
-        <label>Bild 2 Suche:</label>
-        <input type="text" class="img2search" placeholder="orange (bitte in englisch und ohne Umlaute)" required />
-      `;
-      return block;
-    }
+    const blocks = questionsContainer.querySelectorAll(".question-block");
+    const questions = [];
 
-    // ➕ Neue Frage hinzufügen
-    addQuestionBtn?.addEventListener("click", () => {
-      const newBlock = createQuestionBlock();
-      questionsContainer.appendChild(newBlock);
-    });
+    for (const block of blocks) {
+      const question = block.querySelector(".question").value.trim();
+      const search1 = block.querySelector(".img1search").value.trim();
+      const search2 = block.querySelector(".img2search").value.trim();
 
-    // 💾 Beim Speichern
-    form?.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const quizName = document.getElementById("quizname").value.trim();
-      if (!quizName) {
-        statusEl.textContent = "⚠️ Bitte Quiznamen eingeben.";
+      if (!question || !search1 || !search2) {
+        statusEl.textContent = "⚠️ Bitte alle Felder ausfüllen.";
         return;
       }
 
-      const questionBlocks = document.querySelectorAll(".question-block");
-      const questions = [];
+      const img1 = await fetchPixabayImage(search1);
+      const img2 = await fetchPixabayImage(search2);
+      questions.push({ question, img1, img2 });
+    }
 
-      for (const block of questionBlocks) {
-        const question = block.querySelector(".question").value.trim();
-        const search1 = block.querySelector(".img1search").value.trim();
-        const search2 = block.querySelector(".img2search").value.trim();
+    const payload = {
+      quiz: "quizzes",
+      newQuestions: questions,
+      targetCategory: quizName
+    };
 
-        if (!question || !search1 || !search2) {
-          statusEl.textContent = "⚠️ Bitte alle Felder ausfüllen.";
-          return;
-        }
+    try {
+      const response = await fetch("/api/save.js", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
 
-        const img1 = await fetchPixabayImage(search1);
-        const img2 = await fetchPixabayImage(search2);
-
-        questions.push({ question, img1, img2 });
+      const result = await response.json();
+      if (response.ok) {
+        statusEl.innerHTML = `<span style="color: #00cc66;">✅ Erfolgreich gespeichert!</span>`;
+        // Alles zurücksetzen
+        form.reset();
+        questionsContainer.innerHTML = '';
+        questionsContainer.appendChild(createQuestionBlock());
+      } else {
+        statusEl.innerHTML = `<span style="color: red;">❌ Fehler: ${result.error || "Unbekannt"}</span>`;
       }
+    } catch (err) {
+      console.error("❌ Netzwerkfehler:", err);
+      statusEl.innerHTML = `<span style="color: red;">❌ Netzwerkfehler!</span>`;
+    }
+  });
 
-      const payload = {
-        quiz: "quizzes",
-        newQuestions: questions,
-        targetCategory: quizName
-      };
-
-      try {
-        const response = await fetch("/api/save.js", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(payload)
-        });
-
-        const result = await response.json();
-        if (response.ok) {
-          statusEl.innerHTML = `<span style="color: #00cc66;">✅ Erfolgreich gespeichert!</span>`;
-          form.reset();
-          questionsContainer.innerHTML = "";
-          questionsContainer.appendChild(createQuestionBlock());
-        } else {
-          statusEl.innerHTML = `<span style="color: red;">❌ Fehler: ${result.error || "Unbekannt"}</span>`;
-        }
-      } catch (err) {
-        console.error("❌ Netzwerkfehler:", err);
-        statusEl.innerHTML = `<span style="color: red;">❌ Netzwerkfehler!</span>`;
-      }
-    });
+  // ❗Initialer Fragenblock einfügen (falls leer)
+  if (questionsContainer.childElementCount === 0) {
+    questionsContainer.appendChild(createQuestionBlock());
   }
 });
+
