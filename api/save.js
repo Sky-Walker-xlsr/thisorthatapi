@@ -77,5 +77,52 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Fehler beim Speichern auf GitHub", details: error });
   }
 
+
+
+  
+import { Octokit } from "@octokit/core";
+import fs from "fs";
+
+export default async function handler(req, res) {
+  const { action } = req.body;
+
+  if (action === "githubTestSave") {
+    try {
+      const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+
+      // hole den aktuellen SHA des Files (nötig für Update)
+      const { data: fileData } = await octokit.request('GET /repos/{owner}/{repo}/contents/data/quizzes.json', {
+        owner: 'deinUsername',
+        repo: 'thisorthatapi',
+        path: 'data/quizzes.json'
+      });
+
+      // Neuer Inhalt
+      const newContent = {
+        test: "Hallo Amélie 💕"
+      };
+
+      await octokit.request('PUT /repos/{owner}/{repo}/contents/data/quizzes.json', {
+        owner: 'deinUsername',
+        repo: 'thisorthatapi',
+        path: 'data/quizzes.json',
+        message: 'Test-Speicherung von ThisOrThat',
+        content: Buffer.from(JSON.stringify(newContent, null, 2)).toString('base64'),
+        sha: fileData.sha
+      });
+
+      return res.status(200).json({ message: "🎉 Erfolgreich gespeichert!" });
+
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "❌ Fehler beim Speichern", error });
+    }
+  }
+
+  // fallback: handle lokal (falls du beides willst)
+  res.status(400).json({ message: "Ungültige Aktion" });
+}
+
+
   return res.status(200).json({ success: true });
 }
