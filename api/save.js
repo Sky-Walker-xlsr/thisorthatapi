@@ -3,9 +3,21 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Nur POST erlaubt." });
   }
 
-  const { quiz, user, answers, text, newQuestion, targetCategory } = req.body;
+  const {
+    quiz,
+    user,
+    answers,
+    text,
+    newQuestion,
+    targetCategory,
+    file,
+    data
+  } = req.body;
 
-  if (!quiz || (!answers && !text && !newQuestion)) {
+  // Validierung – wenn neue Struktur genutzt wird
+  const isNewFormat = file && data && typeof data === "object";
+
+  if (!isNewFormat && (!quiz || (!answers && !text && !newQuestion))) {
     return res.status(400).json({ error: "Fehlende Felder." });
   }
 
@@ -14,7 +26,8 @@ export default async function handler(req, res) {
   const GITHUB_OWNER = process.env.GITHUB_OWNER;
   const GITHUB_BRANCH = process.env.GITHUB_BRANCH || "main";
 
-  const filePath = `data/${quiz}.json`;
+  const filename = isNewFormat ? file : `${quiz}.json`;
+  const filePath = `data/${filename}`;
   const apiBase = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`;
 
   let existingData = {};
@@ -40,30 +53,35 @@ export default async function handler(req, res) {
   }
 
   // 2. Neue Daten hinzufügen
-  if (answers) {
-    if (existingData[user]) {
-      return res.status(409).json({ error: "Antwort wurde bereits gespeichert." });
+  if (isNewFormat) {
+    const newKey = Object.keys(data)[0];
+    existingData[newKey] = data[newKey];
+  } else {
+    if (answers) {
+      if (existingData[user]) {
+        return res.status(409).json({ error: "Antwort wurde bereits gespeichert." });
+      }
+      existingData[user] = answers;
     }
-    existingData[user] = answers;
+
+    if (text) {
+      if (!existingData._chat) existingData._chat = {};
+      const timestamp = Date.now();
+      existingData._chat[`msg_${timestamp}`] = { user, text };
+    }
+
+    if (newQuestion) {
+      const category = targetCategory || "Fruits";
+      if (!existingData[category]) existingData[category] = [];
+      existingData[category].push(newQuestion);
+    }
   }
 
-  if (text) {
-    if (!existingData._chat) existingData._chat = {};
-    const timestamp = Date.now();
-    existingData._chat[`msg_${timestamp}`] = { user, text };
-  }
-
-  if (newQuestion) {
-    const category = targetCategory || "Fruits";
-    if (!existingData[category]) existingData[category] = [];
-    existingData[category].push(newQuestion);
-  }
-
+  // 3. Speichern
   const updatedContent = Buffer.from(
     JSON.stringify(existingData, null, 2)
   ).toString("base64");
 
-  // 3. Speichern auf GitHub
   const saveResponse = await fetch(apiBase, {
     method: "PUT",
     headers: {
@@ -71,7 +89,7 @@ export default async function handler(req, res) {
       Accept: "application/vnd.github+json",
     },
     body: JSON.stringify({
-      message: `Update ${quiz}.json` + (user ? ` for user ${user}` : ""),
+      message: `Update ${filename}`,
       content: updatedContent,
       sha: sha || undefined,
       branch: GITHUB_BRANCH,
