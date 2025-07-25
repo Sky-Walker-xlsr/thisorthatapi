@@ -72,19 +72,5 @@
       "img1": "images/sleep_early.jpg",
       "img2": "images/stay_late.jpg"
     }
-  ],
-  "Bau": [
-    {
-      "question": "Welches Tool wird öfters benutzt",
-      "img1": "https://via.placeholder.com/600x900?text=Fehler",
-      "img2": "https://via.placeholder.com/600x900?text=Fehler"
-    }
-  ],
-  "bb": [
-    {
-      "question": "bb oder bb",
-      "img1": "https://via.placeholder.com/600x900?text=Fehler",
-      "img2": "https://via.placeholder.com/600x900?text=Fehler"
-    }
   ]
 }
