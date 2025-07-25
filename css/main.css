@@ -12,6 +12,14 @@ body {
     text-align: center;
 }
 
+.site-logo {
+  width: 40px;             /* oder was du willst */
+  height: 40px;
+  border-radius: 50%;      /* das macht's rund */
+  object-fit: cover;       /* falls das Bild nicht quadratisch ist */
+  margin-right: 10px;      /* Abstand zum Text */
+}
+
 .quiz-container-wide {
   max-width: 1600px;
 }
