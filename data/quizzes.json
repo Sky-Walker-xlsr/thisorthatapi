@@ -36,43 +36,48 @@
       "img2": "images/nectarine.jpg"
     }
   ],
-  
-"couples": [
-  {
-    "question": "Netflix oder Kinoabend?",
-    "img1": "images/netflix.jpg",
-    "img2": "images/cinema.jpg"
-  },
-  {
-    "question": "Strandurlaub oder Städtetrip?",
-    "img1": "images/beach.jpg",
-    "img2": "images/citytrip.jpg"
-  },
-  {
-    "question": "Kochen oder Essen gehen?",
-    "img1": "images/cooking.jpg",
-    "img2": "images/restaurant.jpg"
-  },
-  {
-    "question": "Morgens kuscheln oder abends?",
-    "img1": "images/morning.jpg",
-    "img2": "images/evening.jpg"
-  },
-  {
-    "question": "Romantischer Film oder Actionfilm?",
-    "img1": "images/romance.jpg",
-    "img2": "images/action.jpg"
-  },
-  {
-    "question": "Spazieren gehen oder zusammen chillen?",
-    "img1": "images/walk.jpg",
-    "img2": "images/chill.jpg"
-  },
-  {
-    "question": "Früh ins Bett oder lange wach bleiben?",
-    "img1": "images/sleep_early.jpg",
-    "img2": "images/stay_late.jpg"
-  }
-]
-
+  "couples": [
+    {
+      "question": "Netflix oder Kinoabend?",
+      "img1": "images/netflix.jpg",
+      "img2": "images/cinema.jpg"
+    },
+    {
+      "question": "Strandurlaub oder Städtetrip?",
+      "img1": "images/beach.jpg",
+      "img2": "images/citytrip.jpg"
+    },
+    {
+      "question": "Kochen oder Essen gehen?",
+      "img1": "images/cooking.jpg",
+      "img2": "images/restaurant.jpg"
+    },
+    {
+      "question": "Morgens kuscheln oder abends?",
+      "img1": "images/morning.jpg",
+      "img2": "images/evening.jpg"
+    },
+    {
+      "question": "Romantischer Film oder Actionfilm?",
+      "img1": "images/romance.jpg",
+      "img2": "images/action.jpg"
+    },
+    {
+      "question": "Spazieren gehen oder zusammen chillen?",
+      "img1": "images/walk.jpg",
+      "img2": "images/chill.jpg"
+    },
+    {
+      "question": "Früh ins Bett oder lange wach bleiben?",
+      "img1": "images/sleep_early.jpg",
+      "img2": "images/stay_late.jpg"
+    }
+  ],
+  "test": [
+    {
+      "question": "test",
+      "img1": "test",
+      "img2": "test"
+    }
+  ]
 }
