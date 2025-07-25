@@ -241,46 +241,46 @@ if (chatBox) {
 }
 }
 
-// == neues quiz erstellen: ==
+  // === ADDQUIZ.html ===
+  if (location.pathname.endsWith("addquiz.html")) {
+    const form = document.getElementById("quizForm");
+    const statusEl = document.getElementById("status");
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("quizForm");
-  const statusEl = document.getElementById("status");
+    if (form) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-  if (form) {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+        const quizName = document.getElementById("category").value; // <- id evtl. zu quizName ändern!
+        const question = document.getElementById("question").value;
+        const img1 = document.getElementById("img1").value;
+        const img2 = document.getElementById("img2").value;
 
-      const question = document.getElementById("question").value;
-      const img1 = document.getElementById("img1").value;
-      const img2 = document.getElementById("img2").value;
-      const category = document.getElementById("category").value;
+        if (!quizName || !question || !img1 || !img2) {
+          statusEl.textContent = "⚠️ Bitte alle Felder ausfüllen.";
+          return;
+        }
 
-      const payload = {
-        quiz: "quizzes",
-        newQuestion: {
-          question,
-          img1,
-          img2
-        },
-        targetCategory: category
-      };
+        const payload = {
+          quiz: "quizzes",
+          newQuestion: { question, img1, img2 },
+          targetCategory: quizName
+        };
 
-      const response = await fetch("/api/save.js", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
+        const response = await fetch("/api/save.js", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          statusEl.textContent = "✅ Erfolgreich gespeichert!";
+          form.reset();
+        } else {
+          statusEl.textContent = "❌ Fehler: " + (result.error || "Unbekannt");
+        }
       });
-
-      const result = await response.json();
-      if (response.ok) {
-        statusEl.textContent = "✅ Erfolgreich gespeichert!";
-        form.reset();
-      } else {
-        statusEl.textContent = "❌ Fehler: " + (result.error || "Unbekannt");
-      }
-    });
+    }
   }
-});
