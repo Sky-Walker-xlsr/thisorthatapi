@@ -34,7 +34,7 @@ body {
 .site-logo {
   width: 40px;             /* oder was du willst */
   height: 40px;
-  border-radius: var(--radius);      /* das macht's rund */
+  border-radius: 11px;      /* das macht's rund */
   object-fit: cover;       /* falls das Bild nicht quadratisch ist */
   margin-right: 10px;     /* Abstand zum Text */
   margin-top: 10px;  
