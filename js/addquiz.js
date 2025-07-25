@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     div.innerHTML = `
       <button type="button" class="remove-question-btn">❌</button>
       <label>Frage:</label>
-      <input type="text" class="question" placeholder="Bsp. Apfel oder Orange? (keine Umlaute)" required />
+      <input type="text" class="question" placeholder="Bsp. Apfel oder Orange?" required />
 
       <label>Bild 1 Suche:</label>
       <input type="text" class="img1search" placeholder="apple (bitte in englisch und ohne Umlaute)" required />
