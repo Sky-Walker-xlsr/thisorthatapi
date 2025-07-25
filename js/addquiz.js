@@ -21,33 +21,31 @@ document.addEventListener("DOMContentLoaded", () => {
     return div;
   }
 
-  addQuestionBtn?.addEventListener("click", () => {
-  const newBlock = createQuestionBlock();
-  questionsContainer.appendChild(newBlock);
-  setupRemoveButtons();
+  function setupRemoveButtons() {
+    const allRemoveButtons = document.querySelectorAll(".remove-question-btn");
+    allRemoveButtons.forEach((btn) => {
+      btn.onclick = () => {
+        const block = btn.closest(".question-block");
+        if (document.querySelectorAll(".question-block").length > 1) {
+          block.remove();
+        } else {
+          alert("Mindestens eine Frage muss vorhanden sein.");
+        }
+      };
     });
-    
-    function setupRemoveButtons() {
-      const allRemoveButtons = document.querySelectorAll(".remove-question-btn");
-      allRemoveButtons.forEach((btn) => {
-        btn.onclick = () => {
-          const block = btn.closest(".question-block");
-          if (document.querySelectorAll(".question-block").length > 1) {
-            block.remove();
-          } else {
-            alert("Mindestens eine Frage muss vorhanden sein.");
-          }
-        };
-      });
-    }
-
-
-  if (questionsContainer) {
-    questionsContainer.appendChild(createQuestionBlock());
   }
 
-  addQuestionBtn?.addEventListener("click", () => {
+  // Ersten Fragenblock einfügen
+  if (questionsContainer) {
     questionsContainer.appendChild(createQuestionBlock());
+    setupRemoveButtons();
+  }
+
+  // Neue Frage hinzufügen
+  addQuestionBtn?.addEventListener("click", () => {
+    const newBlock = createQuestionBlock();
+    questionsContainer.appendChild(newBlock);
+    setupRemoveButtons();
   });
 
   async function fetchPixabayImage(query) {
@@ -118,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
         form.reset();
         questionsContainer.innerHTML = "";
         questionsContainer.appendChild(createQuestionBlock());
+        setupRemoveButtons();
       } else {
         statusEl.innerHTML = `<span style="color: red;">❌ Fehler: ${result.error || "Unbekannt"}</span>`;
       }
