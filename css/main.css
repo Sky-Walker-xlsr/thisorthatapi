@@ -87,7 +87,7 @@ body {
     background-color: #4444aa;
     color: white;
     border: none;
-    border-radius: var(--radius);
+    border-radius: 10px;
     text-decoration: none;
     cursor: pointer;
 }
