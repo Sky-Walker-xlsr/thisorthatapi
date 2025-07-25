@@ -11,39 +11,33 @@
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="logo-container">
-      <img src="images/logo.png" alt="Logo" class="site-logo">
-    </div>
-    <a href="dashboard.html" class="nav-button">🏠 Dashboard</a>
-  </header>
-
   <div class="container">
-    <h1>Neues Quiz hinzufügen:</h1>
-  
+    <h2>Neues Quiz hinzufügen:</h2>
     <form id="quizForm">
       <label for="quizname">Neuer Quiz Name:</label>
       <input type="text" id="quizname" name="quizname" placeholder="Fruits (keine Umlaute)" required />
 
-      <label for="question">Frage:</label>
-      <input type="text" id="question" name="question" placeholder="Bsp. Apfel oder Orange? (keine Umlaute)" required />
+      <div id="questionsContainer">
+        <div class="question-block">
+          <label for="question">Frage:</label>
+          <input type="text" class="question" placeholder="Bsp. Apfel oder Orange? (keine Umlaute)" required />
 
-      <label for="img1search">Bild 1 Suche:</label>
-      <input type="text" id="img1search" name="img1search" placeholder="apple (bitte in englisch und ohne Umlaute)" required />
+          <label for="img1search">Bild 1 Suche:</label>
+          <input type="text" class="img1search" placeholder="apple (bitte in englisch und ohne Umlaute)" required />
 
-      <label for="img2search">Bild 2 Suche:</label>
-      <input type="text" id="img2search" name="img2search" placeholder="orange (bitte in englisch und ohne Umlaute)" required />
-  
+          <label for="img2search">Bild 2 Suche:</label>
+          <input type="text" class="img2search" placeholder="orange (bitte in englisch und ohne Umlaute)" required />
+        </div>
+      </div>
+
+      <h2 id="add-question-btn" class="button">➕ Weitere Frage hinzufügen</h2>
+      <br />
       <button type="submit" class="button">Speichern</button>
+      <button type="button" onclick="window.location.href='dashboard.html'" class="button">Zurück</button>
+      <p id="status"></p>
     </form>
-  
-    <p id="status"></p>
-    <a href="dashboard.html" class="button" style="margin-top: 20px; display: inline-block;">Zurück</a>
   </div>
-
-
-<script src="js/main.js"></script>
-
+  <script src="/main.js"></script>
 </body>
 
 </html>
