@@ -248,7 +248,7 @@ if (location.pathname.endsWith("addquiz.html")) {
   const questionsContainer = document.getElementById("questionsContainer");
   const addQuestionBtn = document.getElementById("add-question-btn");
 
-  // Pixabay Bild holen
+  // 🔍 Pixabay Bild holen
   async function fetchPixabayImage(query) {
     const apiKey = '51478566-b3d3000cd1ad295edfef73647';
     try {
@@ -261,15 +261,28 @@ if (location.pathname.endsWith("addquiz.html")) {
     }
   }
 
-  // Frage-Block klonen
+  // 🔧 Frage-Block erzeugen
+  function createQuestionBlock() {
+    const block = document.createElement("div");
+    block.className = "question-block";
+    block.innerHTML = `
+      <label>Frage:</label>
+      <input type="text" class="question" placeholder="Bsp. Apfel oder Orange? (keine Umlaute)" required />
+      <label>Bild 1 Suche:</label>
+      <input type="text" class="img1search" placeholder="apple (bitte in englisch und ohne Umlaute)" required />
+      <label>Bild 2 Suche:</label>
+      <input type="text" class="img2search" placeholder="orange (bitte in englisch und ohne Umlaute)" required />
+    `;
+    return block;
+  }
+
+  // ➕ Neue Frage hinzufügen
   addQuestionBtn.addEventListener("click", () => {
-    const firstBlock = document.querySelector(".question-block");
-    const clone = firstBlock.cloneNode(true);
-    clone.querySelectorAll("input").forEach((input) => (input.value = ""));
-    questionsContainer.appendChild(clone);
+    const newBlock = createQuestionBlock();
+    questionsContainer.appendChild(newBlock);
   });
 
-  // Beim Speichern
+  // 💾 Beim Speichern
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -318,9 +331,8 @@ if (location.pathname.endsWith("addquiz.html")) {
         if (response.ok) {
           statusEl.innerHTML = `<span style="color: #00cc66;">✅ Erfolgreich gespeichert!</span>`;
           form.reset();
-          // Nur den ersten Fragenblock lassen
           questionsContainer.innerHTML = "";
-          questionsContainer.appendChild(document.querySelector(".question-block").cloneNode(true));
+          questionsContainer.appendChild(createQuestionBlock());
         } else {
           statusEl.innerHTML = `<span style="color: red;">❌ Fehler: ${result.error || "Unbekannt"}</span>`;
         }
@@ -331,5 +343,6 @@ if (location.pathname.endsWith("addquiz.html")) {
     });
   }
 }
+
 
 
