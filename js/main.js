@@ -262,7 +262,7 @@ if (location.pathname.endsWith("addquiz.html")) {
 
       // 🔍 Automatisches Bild holen mit Pixabay
       async function fetchPixabayImage(query) {
-        const apiKey = '51478566-b3d3000cd1ad295edfef73647'; // dein API Key
+        const apiKey = '51478566-b3d3000cd1ad295edfef73647';
         try {
           const res = await fetch(`https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(query)}&image_type=photo&per_page=3`);
           const data = await res.json();
@@ -309,4 +309,5 @@ if (location.pathname.endsWith("addquiz.html")) {
     });
   }
 }
+
 
