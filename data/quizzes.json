@@ -72,5 +72,12 @@
       "img1": "images/sleep_early.jpg",
       "img2": "images/stay_late.jpg"
     }
+  ],
+  "cc": [
+    {
+      "question": "cc",
+      "img1": "https://pixabay.com/get/g98894e9ac01689af36ed9bfd9604165594c1af1c43a8e4186a48002c3de1330a846429fe69d226a58c8ba3ca812817a0244528fb62db0004b12ead453be464be_640.jpg",
+      "img2": "https://pixabay.com/get/gdb042e1251de479002ef1420fdbc6f0df4b5638257019aecaeb4adf66ad976c087c688f21aa242f92c5c4998cb816a09_640.jpg"
+    }
   ]
 }
