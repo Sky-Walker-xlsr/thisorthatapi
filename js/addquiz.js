@@ -53,18 +53,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const questions = [];
 
 for (const block of questionBlocks) {
-  const qEl = block.querySelector(".question");
-  const i1El = block.querySelector(".img1search");
-  const i2El = block.querySelector(".img2search");
+  const qInput = block.querySelector("input.question");
+  const i1Input = block.querySelector("input.img1search");
+  const i2Input = block.querySelector("input.img2search");
 
-  if (!qEl || !i1El || !i2El) {
+  if (!qInput || !i1Input || !i2Input) {
     statusEl.textContent = "⚠️ Fehler: Felder konnten nicht gelesen werden.";
     return;
   }
 
-  const question = qEl.value.trim();
-  const search1 = i1El.value.trim();
-  const search2 = i2El.value.trim();
+  const question = qInput.value.trim();
+  const search1 = i1Input.value.trim();
+  const search2 = i2Input.value.trim();
 
   if (!question || !search1 || !search2) {
     statusEl.textContent = "⚠️ Bitte alle Felder ausfüllen.";
@@ -76,6 +76,7 @@ for (const block of questionBlocks) {
 
   questions.push({ question, img1, img2 });
 }
+
 
     const payload = {
       quiz: "quizzes",
