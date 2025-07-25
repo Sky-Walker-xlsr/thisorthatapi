@@ -412,7 +412,6 @@ input {
 #add-question-btn:hover {
   background-color: rgba(136, 132, 216, 0.1);
   border-color: #a89ff0;
-  color: #a89ff0;
 }
 
 .remove-question-btn {
