@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neues Quiz hinzufügen</title>
+  <link rel="icon" type="image/x-icon" href="images/icon.png">
+  <link rel="stylesheet" href="css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="logo-container">
+      <img src="images/logo.png" alt="Logo" class="site-logo">
+    </div>
+    <a href="index.html" class="nav-button">Logout</a>
+  </header>
+
+  <div class="container">
+    <h1>Neues Quiz hinzufügen</h1>
+    <form id="quizForm">
+      <label for="category">Kategorie:</label>
+      <select id="category" name="category">
+        <option value="Fruits">Fruits</option>
+        <option value="couples">Couples</option>
+      </select>
+
+      <label for="question">Frage:</label>
+      <input type="text" id="question" name="question" required />
+
+      <label for="img1">Bild 1 URL:</label>
+      <input type="text" id="img1" name="img1" required />
+
+      <label for="img2">Bild 2 URL:</label>
+      <input type="text" id="img2" name="img2" required />
+
+      <button type="submit" class="button">Speichern</button>
+    </form>
+    <p id="status"></p>
+    <a href="dashboard.html" class="button" style="margin-top: 20px; display: inline-block;">Zurück</a>
+  </div>
+
+<script src="js/main.js"></script>
+
+</body>
+
+</html>
