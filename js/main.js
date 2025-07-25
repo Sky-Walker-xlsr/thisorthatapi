@@ -242,15 +242,38 @@ if (chatBox) {
 }
 
 // === ADDQUIZ.html ===
-document.addEventListener("DOMContentLoaded", () => {
-  if (!location.pathname.endsWith("addquiz.html")) return;
-
+if (location.pathname.endsWith("addquiz.html")) {
   const form = document.getElementById("quizForm");
   const statusEl = document.getElementById("status");
   const questionsContainer = document.getElementById("questionsContainer");
   const addQuestionBtn = document.getElementById("add-question-btn");
 
-  // 🔍 Pixabay Bild holen
+  // 🔁 Template-Funktion für einen Frageblock
+  function createQuestionBlock() {
+    const div = document.createElement("div");
+    div.className = "question-block";
+    div.innerHTML = `
+      <label>Frage:</label>
+      <input type="text" class="question" placeholder="Bsp. Apfel oder Orange? (keine Umlaute)" required />
+
+      <label>Bild 1 Suche:</label>
+      <input type="text" class="img1search" placeholder="apple (bitte in englisch und ohne Umlaute)" required />
+
+      <label>Bild 2 Suche:</label>
+      <input type="text" class="img2search" placeholder="orange (bitte in englisch und ohne Umlaute)" required />
+    `;
+    return div;
+  }
+
+  // 🚀 Beim Start: einen Block hinzufügen
+  questionsContainer.appendChild(createQuestionBlock());
+
+  // ➕ Weitere hinzufügen
+  addQuestionBtn.addEventListener("click", () => {
+    questionsContainer.appendChild(createQuestionBlock());
+  });
+
+  // 🖼️ Pixabay Bild holen
   async function fetchPixabayImage(query) {
     const apiKey = '51478566-b3d3000cd1ad295edfef73647';
     try {
@@ -263,29 +286,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 🧱 Frage-Block erstellen
-  function createQuestionBlock() {
-    const block = document.createElement("div");
-    block.className = "question-block";
-    block.innerHTML = `
-      <label>Frage:</label>
-      <input type="text" class="question" placeholder="z.B. Apple oder Banana?" required>
-      <label>Bild 1 Suche:</label>
-      <input type="text" class="img1search" placeholder="apple" required>
-      <label>Bild 2 Suche:</label>
-      <input type="text" class="img2search" placeholder="banana" required>
-    `;
-    return block;
-  }
-
-  // ➕ Neue Frage hinzufügen
-  addQuestionBtn?.addEventListener("click", () => {
-    const block = createQuestionBlock();
-    questionsContainer.appendChild(block);
-  });
-
-  // 💾 Beim Absenden speichern
-  form?.addEventListener("submit", async (e) => {
+  // 💾 Speichern
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const quizName = document.getElementById("quizname").value.trim();
@@ -294,10 +296,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const blocks = questionsContainer.querySelectorAll(".question-block");
+    const questionBlocks = document.querySelectorAll(".question-block");
     const questions = [];
 
-    for (const block of blocks) {
+    for (const block of questionBlocks) {
       const question = block.querySelector(".question").value.trim();
       const search1 = block.querySelector(".img1search").value.trim();
       const search2 = block.querySelector(".img2search").value.trim();
@@ -309,6 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const img1 = await fetchPixabayImage(search1);
       const img2 = await fetchPixabayImage(search2);
+
       questions.push({ question, img1, img2 });
     }
 
@@ -321,16 +324,17 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch("/api/save.js", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify(payload)
       });
 
       const result = await response.json();
       if (response.ok) {
         statusEl.innerHTML = `<span style="color: #00cc66;">✅ Erfolgreich gespeichert!</span>`;
-        // Alles zurücksetzen
         form.reset();
-        questionsContainer.innerHTML = '';
+        questionsContainer.innerHTML = "";
         questionsContainer.appendChild(createQuestionBlock());
       } else {
         statusEl.innerHTML = `<span style="color: red;">❌ Fehler: ${result.error || "Unbekannt"}</span>`;
@@ -340,10 +344,6 @@ document.addEventListener("DOMContentLoaded", () => {
       statusEl.innerHTML = `<span style="color: red;">❌ Netzwerkfehler!</span>`;
     }
   });
+}
 
-  // ❗Initialer Fragenblock einfügen (falls leer)
-  if (questionsContainer.childElementCount === 0) {
-    questionsContainer.appendChild(createQuestionBlock());
-  }
-});
 
