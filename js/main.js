@@ -260,9 +260,21 @@ if (location.pathname.endsWith("addquiz.html")) {
         return;
       }
 
-      // 🔥 Automatische Unsplash-Links
-      const img1 = `https://source.unsplash.com/600x900/?${encodeURIComponent(search1)}`;
-      const img2 = `https://source.unsplash.com/600x900/?${encodeURIComponent(search2)}`;
+      // 🔍 Automatisches Bild holen mit Pixabay
+      async function fetchPixabayImage(query) {
+        const apiKey = '51478566-bd13000ecd1ad299edef73d647'; // dein API Key
+        try {
+          const res = await fetch(`https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(query)}&image_type=photo&per_page=3`);
+          const data = await res.json();
+          return data.hits?.[0]?.webformatURL || 'https://via.placeholder.com/600x900?text=Kein+Bild';
+        } catch (err) {
+          console.error("❌ Pixabay-Fehler:", err);
+          return 'https://via.placeholder.com/600x900?text=Fehler';
+        }
+      }
+
+      const img1 = await fetchPixabayImage(search1);
+      const img2 = await fetchPixabayImage(search2);
 
       const payload = {
         quiz: "quizzes",
@@ -297,3 +309,4 @@ if (location.pathname.endsWith("addquiz.html")) {
     });
   }
 }
+
