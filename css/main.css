@@ -1,3 +1,9 @@
+/* oder was du willst */
+:root {
+  --radius: 20px; /* hier kannst du später z.B. 16px oder 2xl oder 50% setzen */
+}
+
+
 body {
     margin: 0;
     font-family: 'Josefin Sans', sans-serif;
@@ -28,7 +34,7 @@ body {
 .site-logo {
   width: 40px;             /* oder was du willst */
   height: 40px;
-  border-radius: 10px;      /* das macht's rund */
+  border-radius: var(--radius);      /* das macht's rund */
   object-fit: cover;       /* falls das Bild nicht quadratisch ist */
   margin-right: 10px;     /* Abstand zum Text */
   margin-top: 10px;  
@@ -40,7 +46,7 @@ body {
   right: 20px;
   width: 100px;             /* doppelt so groß */
   height: 100px;
-  border-radius: 10px;
+  border-radius: var(--radius);
   background-color: #4B00B5; /* dein dunkles Lila */
   border: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -81,7 +87,7 @@ body {
     background-color: #4444aa;
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: var(--radius);
     text-decoration: none;
     cursor: pointer;
 }
@@ -92,7 +98,7 @@ input {
     padding: 10px;
     font-size: 16px;
     width: 80%;
-    border-radius: 10px;
+    border-radius: var(--radius);
     border: none;
 }
 
@@ -141,7 +147,7 @@ input {
   max-width: 600px;
   height: auto;
   max-height: 600px;
-  border-radius: 10px;
+  border-radius: var(--radius);
   cursor: pointer;
   object-fit: cover;
   transition: transform 0.2s;
@@ -151,7 +157,7 @@ input {
   width: 300px;
   height: 300px;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: var(--radius);
   background-color: #fff; /* oder transparent */
 }
 
@@ -168,7 +174,7 @@ input {
     background-color: white;
     color: #0a0a23;
     padding: 15px 20px;
-    border-radius: 10px;
+    border-radius: var(--radius);
 }
 
 @media (max-width: 768px) {
@@ -187,7 +193,7 @@ input {
     color: white;
     padding: 10px 20px;
     text-decoration: none;
-    border-radius: 10px;
+    border-radius: var(--radius);
     font-weight: bold;
     transition: background-color 0.3s ease;
   }
@@ -210,7 +216,7 @@ input {
   max-height: 400px;
   background: #1a1a3d;
   padding: 15px;
-  border-radius: 10px;
+  border-radius: var(--radius);
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
   display: flex;
   flex-direction: column;
@@ -239,7 +245,7 @@ input {
   flex-grow: 1;
   padding: 8px;
   font-size: 14px;
-  border-radius: 10px;
+  border-radius: var(--radius);
   border: none;
 }
 
@@ -248,7 +254,7 @@ input {
   background-color: #4444aa;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius);
   padding: 8px 12px;
   cursor: pointer;
   font-weight: bold;
@@ -262,7 +268,7 @@ input {
 .chat-message {
   max-width: 75%;
   padding: 8px 12px;
-  border-radius: 10px;
+  border-radius: var(--radius);
   font-size: 14px;
   line-height: 1.4;
   word-wrap: break-word;
@@ -305,7 +311,7 @@ input {
     align-items: center;
     justify-content: center;
     padding: 30px;
-    border-radius: 10px;
+    border-radius: var(--radius);
     color: white;
     text-decoration: none;
     font-size: 20px;
@@ -370,7 +376,7 @@ input {
   max-width: 200px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: var(--radius);
   box-shadow: 0 0 12px rgba(0,0,0,0.4);
 }
 
@@ -384,7 +390,7 @@ input {
   margin-top: 20px;
   padding: 15px;
   border: 2px dashed #444;
-  border-radius: 10px;
+  border-radius: var(--radius);
 }
 
 #add-question-btn {
