@@ -361,3 +361,13 @@ input {
   display: inline-block;
 }
 
+.remove-question-btn {
+  float: right;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: red;
+  cursor: pointer;
+  margin-top: -10px;
+  margin-right: -10px;
+}
