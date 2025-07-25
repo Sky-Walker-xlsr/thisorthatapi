@@ -250,7 +250,7 @@ if (chatBox) {
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const quizName = document.getElementById("category").value; // <- id evtl. zu quizName ändern!
+        const quizName = document.getElementById("quizname").value;
         const question = document.getElementById("question").value;
         const img1 = document.getElementById("img1").value;
         const img2 = document.getElementById("img2").value;
