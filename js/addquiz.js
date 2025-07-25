@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const div = document.createElement("div");
     div.className = "question-block";
     div.innerHTML = `
+      <button type="button" class="remove-question-btn">❌</button>
       <label>Frage:</label>
       <input type="text" class="question" placeholder="Bsp. Apfel oder Orange? (keine Umlaute)" required />
 
@@ -19,6 +20,27 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     return div;
   }
+
+  addQuestionBtn?.addEventListener("click", () => {
+  const newBlock = createQuestionBlock();
+  questionsContainer.appendChild(newBlock);
+  setupRemoveButtons();
+    });
+    
+    function setupRemoveButtons() {
+      const allRemoveButtons = document.querySelectorAll(".remove-question-btn");
+      allRemoveButtons.forEach((btn) => {
+        btn.onclick = () => {
+          const block = btn.closest(".question-block");
+          if (document.querySelectorAll(".question-block").length > 1) {
+            block.remove();
+          } else {
+            alert("Mindestens eine Frage muss vorhanden sein.");
+          }
+        };
+      });
+    }
+
 
   if (questionsContainer) {
     questionsContainer.appendChild(createQuestionBlock());
