@@ -12,6 +12,19 @@ body {
     text-align: center;
 }
 
+.site-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    padding: 10px 20px;
+    background-color: #0a0a23;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    z-index: 1000;
+  }
+
 .site-logo {
   width: 40px;             /* oder was du willst */
   height: 40px;
@@ -135,19 +148,7 @@ input {
     }
 }
 
-/* wird gebraucht für header und link zu dashboard */
-.site-header {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    padding: 10px 20px;
-    background-color: #0a0a23;
-    display: flex;
-    justify-content: flex-end;
-    z-index: 1000;
-  }
-  
+
   .nav-button {
     background-color: #4444aa;
     color: white;
