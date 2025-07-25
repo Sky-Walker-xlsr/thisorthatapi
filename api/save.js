@@ -1,11 +1,11 @@
-export default async function handler(req, res) { 
+export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Nur POST erlaubt." });
   }
 
-  const { quiz, user, answers, text } = req.body;
+  const { quiz, user, answers, text, newQuestion, targetCategory } = req.body;
 
-  if (!quiz || !user || (!answers && !text)) {
+  if (!quiz || (!answers && !text && !newQuestion)) {
     return res.status(400).json({ error: "Fehlende Felder." });
   }
 
@@ -53,6 +53,12 @@ export default async function handler(req, res) {
     existingData._chat[`msg_${timestamp}`] = { user, text };
   }
 
+  if (newQuestion) {
+    const category = targetCategory || "Fruits";
+    if (!existingData[category]) existingData[category] = [];
+    existingData[category].push(newQuestion);
+  }
+
   const updatedContent = Buffer.from(
     JSON.stringify(existingData, null, 2)
   ).toString("base64");
@@ -65,7 +71,7 @@ export default async function handler(req, res) {
       Accept: "application/vnd.github+json",
     },
     body: JSON.stringify({
-      message: `Update ${quiz}.json for user ${user}`,
+      message: `Update ${quiz}.json` + (user ? ` for user ${user}` : ""),
       content: updatedContent,
       sha: sha || undefined,
       branch: GITHUB_BRANCH,
@@ -77,59 +83,5 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Fehler beim Speichern auf GitHub", details: error });
   }
 
-
-
-  
-import { Octokit } from "@octokit/core";
-import fs from "fs";
-
-export default async function handler(req, res) {
-  const { action } = req.body;
-
-  if (action === "githubTestSave") {
-    try {
-      const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
-
-      // 🔁 Schritt 1: quizzes.json abrufen (inkl. SHA)
-      const { data: fileData } = await octokit.request('GET /repos/{owner}/{repo}/contents/data/quizzes.json', {
-        owner: 'Sky-Walker-xlsr',
-        repo: 'thisorthatapi',
-        path: 'data/quizzes.json'
-      });
-
-      // 🔁 Schritt 2: Inhalt dekodieren
-      const content = Buffer.from(fileData.content, 'base64').toString();
-      const quizzes = JSON.parse(content);
-
-      // 🔁 Schritt 3: Testfrage anhängen
-      quizzes.Fruits.push({
-        question: "Testfrage: Pizza oder Pasta?",
-        img1: "images/pizza.jpg",
-        img2: "images/pasta.jpg"
-      });
-
-      // 🔁 Schritt 4: Zurück in GitHub speichern
-      await octokit.request('PUT /repos/{owner}/{repo}/contents/data/quizzes.json', {
-        owner: 'Sky-Walker-xlsr',
-        repo: 'thisorthatapi',
-        path: 'data/quizzes.json',
-        message: '✅ Testfrage automatisch hinzugefügt',
-        content: Buffer.from(JSON.stringify(quizzes, null, 2)).toString('base64'),
-        sha: fileData.sha
-      });
-
-      return res.status(200).json({ message: "✅ Testfrage gespeichert!" });
-
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: "❌ Fehler beim GitHub-Speichern", error });
-    }
-  }
-
-  res.status(400).json({ message: "❓ Unbekannte Aktion" });
-}
-
-
-
-  return res.status(200).json({ success: true });
+  return res.status(200).json({ message: "✅ Erfolgreich gespeichert!" });
 }
