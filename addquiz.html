@@ -21,10 +21,13 @@
         <!-- Frageblöcke werden dynamisch per JS eingefügt -->
       </div>
 
-      <h2 id="add-question-btn" class="button">➕ Weitere Frage hinzufügen</h2>
-      <br />
-      <button type="submit" class="button">Speichern</button>
-      <button type="button" onclick="window.location.href='dashboard.html'" class="button">Zurück</button>
+      <button id="add-question-btn" class="button">➕ Weitere Frage hinzufügen</button>
+      <p id="status"></p>
+      <h2 class="button-row">
+        <button type="submit" class="button">Speichern</button>
+        <button onclick="history.back()" class="button">Zurück</button>
+      </h2>
+
       <p id="status"></p>
     </form>
   </div>
