@@ -3,18 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Nur POST erlaubt." });
   }
 
-  const {
-    quiz,
-    user,
-    answers,
-    text,
-    newQuestion,
-    targetCategory,
-    file,
-    data
-  } = req.body;
-
-  // Validierung – wenn neue Struktur genutzt wird
+  const { quiz, user, answers, text, newQuestion, newQuestions, targetCategory, file, data } = req.body;
   const isNewFormat = file && data && typeof data === "object";
 
   if (!isNewFormat && (!quiz || (!answers && !text && !newQuestion))) {
@@ -33,7 +22,6 @@ export default async function handler(req, res) {
   let existingData = {};
   let sha = null;
 
-  // 1. Bestehende Datei holen
   try {
     const response = await fetch(`${apiBase}?ref=${GITHUB_BRANCH}`, {
       headers: {
@@ -52,7 +40,7 @@ export default async function handler(req, res) {
     console.log("Datei existiert noch nicht oder konnte nicht gelesen werden.");
   }
 
-  // 2. Neue Daten hinzufügen
+  // === Neue Daten hinzufügen ===
   if (isNewFormat) {
     const newKey = Object.keys(data)[0];
     existingData[newKey] = data[newKey];
@@ -70,14 +58,18 @@ export default async function handler(req, res) {
       existingData._chat[`msg_${timestamp}`] = { user, text };
     }
 
-    if (newQuestion) {
+    if (newQuestion || newQuestions) {
       const category = targetCategory || "Fruits";
       if (!existingData[category]) existingData[category] = [];
-      existingData[category].push(newQuestion);
+      if (newQuestions) {
+        existingData[category].push(...newQuestions);
+      } else {
+        existingData[category].push(newQuestion);
+      }
     }
   }
 
-  // 3. Speichern
+  // === Speichern auf GitHub ===
   const updatedContent = Buffer.from(
     JSON.stringify(existingData, null, 2)
   ).toString("base64");
