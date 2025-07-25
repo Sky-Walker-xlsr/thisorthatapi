@@ -245,44 +245,63 @@ if (chatBox) {
 if (location.pathname.endsWith("addquiz.html")) {
   const form = document.getElementById("quizForm");
   const statusEl = document.getElementById("status");
+  const questionsContainer = document.getElementById("questionsContainer");
+  const addQuestionBtn = document.getElementById("add-question-btn");
 
+  // Pixabay Bild holen
+  async function fetchPixabayImage(query) {
+    const apiKey = '51478566-b3d3000cd1ad295edfef73647';
+    try {
+      const res = await fetch(`https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(query)}&image_type=photo&per_page=3`);
+      const data = await res.json();
+      return data.hits?.[0]?.webformatURL || 'https://via.placeholder.com/600x900?text=Kein+Bild';
+    } catch (err) {
+      console.error("❌ Pixabay-Fehler:", err);
+      return 'https://via.placeholder.com/600x900?text=Fehler';
+    }
+  }
+
+  // Frage-Block klonen
+  addQuestionBtn.addEventListener("click", () => {
+    const firstBlock = document.querySelector(".question-block");
+    const clone = firstBlock.cloneNode(true);
+    clone.querySelectorAll("input").forEach((input) => (input.value = ""));
+    questionsContainer.appendChild(clone);
+  });
+
+  // Beim Speichern
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const quizName = document.getElementById("quizname").value.trim();
-      const question = document.getElementById("question").value.trim();
-      const search1 = document.getElementById("img1search").value.trim();
-      const search2 = document.getElementById("img2search").value.trim();
-
-      if (!quizName || !question || !search1 || !search2) {
-        statusEl.textContent = "⚠️ Bitte alle Felder ausfüllen.";
+      if (!quizName) {
+        statusEl.textContent = "⚠️ Bitte Quiznamen eingeben.";
         return;
       }
 
-      // 🔍 Automatisches Bild holen mit Pixabay
-      async function fetchPixabayImage(query) {
-        const apiKey = '51478566-b3d3000cd1ad295edfef73647';
-        try {
-          const res = await fetch(`https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(query)}&image_type=photo&per_page=3`);
-          const data = await res.json();
-          return data.hits?.[0]?.webformatURL || 'https://via.placeholder.com/600x900?text=Kein+Bild';
-        } catch (err) {
-          console.error("❌ Pixabay-Fehler:", err);
-          return 'https://via.placeholder.com/600x900?text=Fehler';
-        }
-      }
+      const questionBlocks = document.querySelectorAll(".question-block");
+      const questions = [];
 
-      const img1 = await fetchPixabayImage(search1);
-      const img2 = await fetchPixabayImage(search2);
+      for (const block of questionBlocks) {
+        const question = block.querySelector(".question").value.trim();
+        const search1 = block.querySelector(".img1search").value.trim();
+        const search2 = block.querySelector(".img2search").value.trim();
+
+        if (!question || !search1 || !search2) {
+          statusEl.textContent = "⚠️ Bitte alle Felder ausfüllen.";
+          return;
+        }
+
+        const img1 = await fetchPixabayImage(search1);
+        const img2 = await fetchPixabayImage(search2);
+
+        questions.push({ question, img1, img2 });
+      }
 
       const payload = {
         quiz: "quizzes",
-        newQuestion: {
-          question,
-          img1,
-          img2
-        },
+        newQuestions: questions,
         targetCategory: quizName
       };
 
@@ -299,6 +318,9 @@ if (location.pathname.endsWith("addquiz.html")) {
         if (response.ok) {
           statusEl.innerHTML = `<span style="color: #00cc66;">✅ Erfolgreich gespeichert!</span>`;
           form.reset();
+          // Nur den ersten Fragenblock lassen
+          questionsContainer.innerHTML = "";
+          questionsContainer.appendChild(document.querySelector(".question-block").cloneNode(true));
         } else {
           statusEl.innerHTML = `<span style="color: red;">❌ Fehler: ${result.error || "Unbekannt"}</span>`;
         }
