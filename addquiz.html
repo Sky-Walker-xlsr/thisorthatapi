@@ -20,24 +20,27 @@
 
   <div class="container">
     <h1>Neues Quiz hinzufügen</h1>
-    <label for="quizname">Name des neuen Quiz:</label>
-    <input type="text" id="quizname" name="quizname" required />
-
-
+  
+    <form id="quizForm">
+      <label for="quizname">Name des neuen Quiz:</label>
+      <input type="text" id="quizname" name="quizname" required />
+  
       <label for="question">Frage:</label>
       <input type="text" id="question" name="question" required />
-
+  
       <label for="img1">Bild 1 URL:</label>
       <input type="text" id="img1" name="img1" required />
-
+  
       <label for="img2">Bild 2 URL:</label>
       <input type="text" id="img2" name="img2" required />
-
+  
       <button type="submit" class="button">Speichern</button>
     </form>
+  
     <p id="status"></p>
     <a href="dashboard.html" class="button" style="margin-top: 20px; display: inline-block;">Zurück</a>
   </div>
+
 
 <script src="js/main.js"></script>
 
