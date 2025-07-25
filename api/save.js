@@ -90,38 +90,45 @@ export default async function handler(req, res) {
     try {
       const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
-      // hole den aktuellen SHA des Files (nötig für Update)
+      // 🔁 Schritt 1: quizzes.json abrufen (inkl. SHA)
       const { data: fileData } = await octokit.request('GET /repos/{owner}/{repo}/contents/data/quizzes.json', {
-        owner: 'deinUsername',
+        owner: 'Sky-Walker-xlsr',
         repo: 'thisorthatapi',
         path: 'data/quizzes.json'
       });
 
-      // Neuer Inhalt
-      const newContent = {
-        test: "Hallo Amélie 💕"
-      };
+      // 🔁 Schritt 2: Inhalt dekodieren
+      const content = Buffer.from(fileData.content, 'base64').toString();
+      const quizzes = JSON.parse(content);
 
+      // 🔁 Schritt 3: Testfrage anhängen
+      quizzes.Fruits.push({
+        question: "Testfrage: Pizza oder Pasta?",
+        img1: "images/pizza.jpg",
+        img2: "images/pasta.jpg"
+      });
+
+      // 🔁 Schritt 4: Zurück in GitHub speichern
       await octokit.request('PUT /repos/{owner}/{repo}/contents/data/quizzes.json', {
-        owner: 'deinUsername',
+        owner: 'Sky-Walker-xlsr',
         repo: 'thisorthatapi',
         path: 'data/quizzes.json',
-        message: 'Test-Speicherung von ThisOrThat',
-        content: Buffer.from(JSON.stringify(newContent, null, 2)).toString('base64'),
+        message: '✅ Testfrage automatisch hinzugefügt',
+        content: Buffer.from(JSON.stringify(quizzes, null, 2)).toString('base64'),
         sha: fileData.sha
       });
 
-      return res.status(200).json({ message: "🎉 Erfolgreich gespeichert!" });
+      return res.status(200).json({ message: "✅ Testfrage gespeichert!" });
 
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: "❌ Fehler beim Speichern", error });
+      return res.status(500).json({ message: "❌ Fehler beim GitHub-Speichern", error });
     }
   }
 
-  // fallback: handle lokal (falls du beides willst)
-  res.status(400).json({ message: "Ungültige Aktion" });
+  res.status(400).json({ message: "❓ Unbekannte Aktion" });
 }
+
 
 
   return res.status(200).json({ success: true });
