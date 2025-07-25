@@ -20,6 +20,11 @@ body {
   margin-right: 10px;      /* Abstand zum Text */
 }
 
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
 .quiz-container-wide {
   max-width: 1600px;
 }
