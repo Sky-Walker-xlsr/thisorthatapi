@@ -241,6 +241,9 @@ if (chatBox) {
 }
 }
 
+
+
+
 // === ADDQUIZ.html ===
 if (location.pathname.endsWith("addquiz.html")) {
   const form = document.getElementById("quizForm");
@@ -248,7 +251,7 @@ if (location.pathname.endsWith("addquiz.html")) {
   const questionsContainer = document.getElementById("questionsContainer");
   const addQuestionBtn = document.getElementById("add-question-btn");
 
-  // 🔁 Template-Funktion für einen Frageblock
+  // Frageblock generieren
   function createQuestionBlock() {
     const div = document.createElement("div");
     div.className = "question-block";
@@ -265,15 +268,17 @@ if (location.pathname.endsWith("addquiz.html")) {
     return div;
   }
 
-  // 🚀 Beim Start: einen Block hinzufügen
-  questionsContainer.appendChild(createQuestionBlock());
+  // Seite lädt → 1 Frage hinzufügen
+  document.addEventListener("DOMContentLoaded", () => {
+    questionsContainer.appendChild(createQuestionBlock());
+  });
 
-  // ➕ Weitere hinzufügen
+  // Weitere Frage hinzufügen
   addQuestionBtn.addEventListener("click", () => {
     questionsContainer.appendChild(createQuestionBlock());
   });
 
-  // 🖼️ Pixabay Bild holen
+  // Pixabay Bild holen
   async function fetchPixabayImage(query) {
     const apiKey = '51478566-b3d3000cd1ad295edfef73647';
     try {
@@ -286,11 +291,11 @@ if (location.pathname.endsWith("addquiz.html")) {
     }
   }
 
-  // 💾 Speichern
+  // Speichern
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     const quizName = document.getElementById("quizname").value.trim();
+
     if (!quizName) {
       statusEl.textContent = "⚠️ Bitte Quiznamen eingeben.";
       return;
@@ -324,9 +329,7 @@ if (location.pathname.endsWith("addquiz.html")) {
     try {
       const response = await fetch("/api/save.js", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
 
