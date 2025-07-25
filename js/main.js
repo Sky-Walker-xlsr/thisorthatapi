@@ -242,49 +242,49 @@ if (chatBox) {
 }
 
 // === ADDQUIZ.html ===
-if (location.pathname.endsWith("addquiz.html")) {
-  const form = document.getElementById("quizForm");
-  const statusEl = document.getElementById("status");
-  const questionsContainer = document.getElementById("questionsContainer");
-  const addQuestionBtn = document.getElementById("add-question-btn");
+document.addEventListener("DOMContentLoaded", () => {
+  if (location.pathname.endsWith("addquiz.html")) {
+    const form = document.getElementById("quizForm");
+    const statusEl = document.getElementById("status");
+    const questionsContainer = document.getElementById("questionsContainer");
+    const addQuestionBtn = document.getElementById("add-question-btn");
 
-  // 🔍 Pixabay Bild holen
-  async function fetchPixabayImage(query) {
-    const apiKey = '51478566-b3d3000cd1ad295edfef73647';
-    try {
-      const res = await fetch(`https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(query)}&image_type=photo&per_page=3`);
-      const data = await res.json();
-      return data.hits?.[0]?.webformatURL || 'https://via.placeholder.com/600x900?text=Kein+Bild';
-    } catch (err) {
-      console.error("❌ Pixabay-Fehler:", err);
-      return 'https://via.placeholder.com/600x900?text=Fehler';
+    // 🔍 Pixabay Bild holen
+    async function fetchPixabayImage(query) {
+      const apiKey = '51478566-b3d3000cd1ad295edfef73647';
+      try {
+        const res = await fetch(`https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(query)}&image_type=photo&per_page=3`);
+        const data = await res.json();
+        return data.hits?.[0]?.webformatURL || 'https://via.placeholder.com/600x900?text=Kein+Bild';
+      } catch (err) {
+        console.error("❌ Pixabay-Fehler:", err);
+        return 'https://via.placeholder.com/600x900?text=Fehler';
+      }
     }
-  }
 
-  // 🔧 Frage-Block erzeugen
-  function createQuestionBlock() {
-    const block = document.createElement("div");
-    block.className = "question-block";
-    block.innerHTML = `
-      <label>Frage:</label>
-      <input type="text" class="question" placeholder="Bsp. Apfel oder Orange? (keine Umlaute)" required />
-      <label>Bild 1 Suche:</label>
-      <input type="text" class="img1search" placeholder="apple (bitte in englisch und ohne Umlaute)" required />
-      <label>Bild 2 Suche:</label>
-      <input type="text" class="img2search" placeholder="orange (bitte in englisch und ohne Umlaute)" required />
-    `;
-    return block;
-  }
+    // 🔧 Frage-Block erzeugen
+    function createQuestionBlock() {
+      const block = document.createElement("div");
+      block.className = "question-block";
+      block.innerHTML = `
+        <label>Frage:</label>
+        <input type="text" class="question" placeholder="Bsp. Apfel oder Orange? (keine Umlaute)" required />
+        <label>Bild 1 Suche:</label>
+        <input type="text" class="img1search" placeholder="apple (bitte in englisch und ohne Umlaute)" required />
+        <label>Bild 2 Suche:</label>
+        <input type="text" class="img2search" placeholder="orange (bitte in englisch und ohne Umlaute)" required />
+      `;
+      return block;
+    }
 
-  // ➕ Neue Frage hinzufügen
-  addQuestionBtn.addEventListener("click", () => {
-    const newBlock = createQuestionBlock();
-    questionsContainer.appendChild(newBlock);
-  });
+    // ➕ Neue Frage hinzufügen
+    addQuestionBtn?.addEventListener("click", () => {
+      const newBlock = createQuestionBlock();
+      questionsContainer.appendChild(newBlock);
+    });
 
-  // 💾 Beim Speichern
-  if (form) {
-    form.addEventListener("submit", async (e) => {
+    // 💾 Beim Speichern
+    form?.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const quizName = document.getElementById("quizname").value.trim();
@@ -342,7 +342,4 @@ if (location.pathname.endsWith("addquiz.html")) {
       }
     });
   }
-}
-
-
-
+});
