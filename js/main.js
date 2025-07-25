@@ -240,3 +240,47 @@ if (chatBox) {
     });
 }
 }
+
+// == neues quiz erstellen: ==
+
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("quizForm");
+  const statusEl = document.getElementById("status");
+
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const question = document.getElementById("question").value;
+      const img1 = document.getElementById("img1").value;
+      const img2 = document.getElementById("img2").value;
+      const category = document.getElementById("category").value;
+
+      const payload = {
+        quiz: "quizzes",
+        newQuestion: {
+          question,
+          img1,
+          img2
+        },
+        targetCategory: category
+      };
+
+      const response = await fetch("/api/save.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        statusEl.textContent = "✅ Erfolgreich gespeichert!";
+        form.reset();
+      } else {
+        statusEl.textContent = "❌ Fehler: " + (result.error || "Unbekannt");
+      }
+    });
+  }
+});
