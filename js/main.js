@@ -241,31 +241,40 @@ if (chatBox) {
 }
 }
 
-  // === ADDQUIZ.html ===
-  if (location.pathname.endsWith("addquiz.html")) {
-    const form = document.getElementById("quizForm");
-    const statusEl = document.getElementById("status");
+// === ADDQUIZ.html ===
+if (location.pathname.endsWith("addquiz.html")) {
+  const form = document.getElementById("quizForm");
+  const statusEl = document.getElementById("status");
 
-    if (form) {
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-        const quizName = document.getElementById("quizname").value;
-        const question = document.getElementById("question").value;
-        const img1 = document.getElementById("img1").value;
-        const img2 = document.getElementById("img2").value;
+      const quizName = document.getElementById("quizname").value.trim();
+      const question = document.getElementById("question").value.trim();
+      const search1 = document.getElementById("img1search").value.trim();
+      const search2 = document.getElementById("img2search").value.trim();
 
-        if (!quizName || !question || !img1 || !img2) {
-          statusEl.textContent = "⚠️ Bitte alle Felder ausfüllen.";
-          return;
-        }
+      if (!quizName || !question || !search1 || !search2) {
+        statusEl.textContent = "⚠️ Bitte alle Felder ausfüllen.";
+        return;
+      }
 
-        const payload = {
-          quiz: "quizzes",
-          newQuestion: { question, img1, img2 },
-          targetCategory: quizName
-        };
+      // 🔥 Automatische Unsplash-Links
+      const img1 = `https://source.unsplash.com/600x900/?${encodeURIComponent(search1)}`;
+      const img2 = `https://source.unsplash.com/600x900/?${encodeURIComponent(search2)}`;
 
+      const payload = {
+        quiz: "quizzes",
+        newQuestion: {
+          question,
+          img1,
+          img2
+        },
+        targetCategory: quizName
+      };
+
+      try {
         const response = await fetch("/api/save.js", {
           method: "POST",
           headers: {
@@ -276,11 +285,15 @@ if (chatBox) {
 
         const result = await response.json();
         if (response.ok) {
-          statusEl.textContent = "✅ Erfolgreich gespeichert!";
+          statusEl.innerHTML = `<span style="color: #00cc66;">✅ Erfolgreich gespeichert!</span>`;
           form.reset();
         } else {
-          statusEl.textContent = "❌ Fehler: " + (result.error || "Unbekannt");
+          statusEl.innerHTML = `<span style="color: red;">❌ Fehler: ${result.error || "Unbekannt"}</span>`;
         }
-      });
-    }
+      } catch (err) {
+        console.error("❌ Netzwerkfehler:", err);
+        statusEl.innerHTML = `<span style="color: red;">❌ Netzwerkfehler!</span>`;
+      }
+    });
   }
+}
