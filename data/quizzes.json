@@ -79,5 +79,12 @@
       "img1": "https://via.placeholder.com/600x900?text=Fehler",
       "img2": "https://via.placeholder.com/600x900?text=Fehler"
     }
+  ],
+  "bb": [
+    {
+      "question": "bb oder bb",
+      "img1": "https://via.placeholder.com/600x900?text=Fehler",
+      "img2": "https://via.placeholder.com/600x900?text=Fehler"
+    }
   ]
 }
