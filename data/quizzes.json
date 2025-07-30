@@ -146,5 +146,12 @@
       "img1": "https://pixabay.com/get/g1516e8f6f990ce3272cced68cf84453b7f00d0c424cbecca7c8dc5051c5d3468423a198c940bd7f92119e2d6c399887644e123395676169a384b9831a882a4bc_640.jpg",
       "img2": "https://pixabay.com/get/gd83367256f3259f157d6c3759d407485727daa6886cb14a64fce1d711d57daa3e4b91b849319116ace82a764d34c6b91bb4a45dacad209893f40bbdd9a3bed6b_640.jpg"
     }
+  ],
+  "test": [
+    {
+      "question": "Hundi oder katzi",
+      "img1": "https://pixabay.com/get/ge13f1eabda628c59cdeae642654b821fe6c8d8506b82851e5519ed11abca3c6d87768b203dc0ba24808eff190d60c793452590d18069f020c4d6c3f7415b28ec_640.jpg",
+      "img2": "https://pixabay.com/get/g272835ee6a9fcdb272fcbf53456124cc50d4eb6dc40881203c6b26fc77c20c0f3543f61f068952f6fa3bb099a85447f6a6525b27d22c3a8afccb18c4f9f6ef25_640.jpg"
+    }
   ]
 }
