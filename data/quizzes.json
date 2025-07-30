@@ -79,5 +79,72 @@
       "img1": "https://pixabay.com/get/g714b147a7fd6703fd2686ccf889645299404b96e2b6c1ead97aa6fee12c9cc0c8d041848c9deb115c65101e95fae33c6b879a82a7bf3969af421c3700e3f7029_640.jpg",
       "img2": "https://pixabay.com/get/ge7bac1522c3084219d8855cd93deae6561aa367a1941a2a9fd941f845873c7048585c99c664297d95867dcc7e500d00591b883e887b09456c29583e894c75408_640.jpg"
     }
+  ],
+  "Eisbrecherquiz": [
+    {
+      "question": "Sommer oder Winter",
+      "img1": "https://pixabay.com/get/g9938ba4491b8b0cf1c132c1eec08228dfed022c6940de14cca15331f93c973cfc7cc35861b49460f899204f35b37419432f4e51e712c798603986058df6e7888_640.jpg",
+      "img2": "https://pixabay.com/get/g94a6f15d8a4d4b7e5e1610d48f5d4de301ce2f2bd2d376fb0a618d7654f47b675096b959ab0fa434549f332666c0543cf0bb952626f3f0531e53efc752dcc407_640.jpg"
+    },
+    {
+      "question": "Schokoladen- oder Vanilleglace",
+      "img1": "https://pixabay.com/get/gaf85c43414c5dc38b915144068483473502a3a056f1c6e81e29cae610fb76fe599b8a1b1b800c30b17223e5853aae15f_640.jpg",
+      "img2": "https://pixabay.com/get/g5ad7f856ac1eb3cc0543811ed94561790ee84c6e386e7d29df0600d09c6e9ef6d4e2b9d369d86ccee6709b44ba3d3cdd_640.jpg"
+    },
+    {
+      "question": "Süss oder Salzig",
+      "img1": "https://pixabay.com/get/gf807005765128ac6033af59edab95eeb0a76a84cc99dbdfffff7fa24f290e9ca6754f0290aaa445d588a1b3c4941aacd971d415f649537a254188c908c126da4_640.jpg",
+      "img2": "https://pixabay.com/get/g227d8f901c48f5af9d5aaacd977e69303708f4d970686702782956ba48bd65e34dfdc20f422c07d511d2ceda29fe4146ba4f29a2a339ac20395d97edb2630f50_640.jpg"
+    },
+    {
+      "question": "Vergangenheit oder Zukunft",
+      "img1": "https://pixabay.com/get/g69902a29031f25faceef23f84df336cb0f5a894e3b289c73534bb2466d714611d314185d41f967f6cd39bc6b1ce9c66000c37fd4a40c782b9840038390ce1662_640.jpg",
+      "img2": "https://pixabay.com/get/g6da75a9cfb108c481e278db4120bcd5293e2aa818fe39d0ad4e9e1f0c19a2ce39107ed05adf01daad0210da8a60f811551979dfb508e84019f4eae79f09faba4_640.jpg"
+    },
+    {
+      "question": "Pizza oder Burger",
+      "img1": "https://pixabay.com/get/g285d80736bcab839562875bcee63eca96835f0bdea9286695972478ca35f912ce9f60dd71a4bdfe031c792f72fbf62cb_640.jpg",
+      "img2": "https://pixabay.com/get/g9c39a3c2f6d181e93ab71776bc97eaf7aea8fc93a1ba135a7b36cc8fd6324f11742004efd8897083c7cfea7642b0f116738b0fa15d9e9be2cad1560066ceeeaa_640.jpg"
+    },
+    {
+      "question": "Handgeschriebener Brief oder Whatsapp-Nachricht",
+      "img1": "https://pixabay.com/get/gaaa0ef42d2a4ae253605df560bea4880e69c9fb3408db8e6117af9f5b7482ccc353f25cce2af6221f5926f33316416de4984c6b0a447e31f3f7c1b6f3bb14297_640.jpg",
+      "img2": "https://pixabay.com/get/g4f78ba2fa017932c71804f73b7ace311656de0cf08eec2fc755e2b58f70e00fecae62de893afb3b58cf4c4338e960ea6_640.jpg"
+    },
+    {
+      "question": "Camping oder Hotel",
+      "img1": "https://pixabay.com/get/g81786bd334bdabb48f1dc45e8e8624f64e4c5f30b6e25b04cf8777774a36c155eed097b818219a225edffd5bf56b31d4fe16b2e093baa1f6908428576eb58be9_640.jpg",
+      "img2": "https://pixabay.com/get/g7f1c133853aa5b2596a540606a4a3fe5165d6ac1d4b8b6f66913c884bdf6a9ecd126702e5d142d170f0618e74e4a7b9cb322ca07fc502ac9208ac85bfa1f9834_640.jpg"
+    },
+    {
+      "question": "Handy oder Laptop",
+      "img1": "https://pixabay.com/get/g248fbfd40d7eb2553e3d4acee3152682fade8c2f8569e6f7ae8d84e85e79bb07cda770d280248aba6c900e67c34a6ba2bea907caf15decd9d49291515a03926b_640.jpg",
+      "img2": "https://pixabay.com/get/ga3cc52142b37d3bc17ed6d80c949716b30fd7622762ce723e524f1ffdd640e53a0db9754c183038ff6fed12a7bc895ac2771c4209af0c07261017a975393cc2b_640.jpg"
+    },
+    {
+      "question": "Auto fahren oder Fahrrad fahren",
+      "img1": "https://pixabay.com/get/g89da3498af1b9b59b9cef5c28b78c4ea1d120e32f8e33ceb0044dd4ca6c23f3ca7f2dd7592573928a044dc1d2239469cee9469f4321eb1cd2cd165b80a26f01a_640.jpg",
+      "img2": "https://pixabay.com/get/g013303fd1742225b578bf9bed4a59ed96803919b7031a81dd0b02a40779f5b27f1db6425dc9889b0a188ee7f29aa2eef6bbdf616c26ed6cfe7d78d6cc419f586_640.jpg"
+    },
+    {
+      "question": "Ketchup oder Senf",
+      "img1": "https://pixabay.com/get/gd4461f0b8595b0e6ed71edfe66a0152aaaa8b0eebf25c55b7c4222f6023201190e6a7cb7d521faceb1209c27116b2fce0264d9eb1492e62f86b1769aeb595ee8_640.jpg",
+      "img2": "https://pixabay.com/get/g60cca70681945e914f8ca01d73d658b9c2d0eaff45825d7b735ec1395d86cec36b628f5674187adbb26158f03f3a964ea736e0b7389ad8f73bf25676bf8c4e30_640.jpg"
+    },
+    {
+      "question": "McDonalds oder BurgerKing",
+      "img1": "https://pixabay.com/get/gc12e3c9c95d4a8ff3dfc831b1fd5c8d23871a6fb9b4bd3482d14bf71c2198a3a6b4c4ced75e1a77953ae3295031cbb659c2ef26e76fa76865eee6eca7b0c38ce_640.jpg",
+      "img2": "https://pixabay.com/get/gea9afef80df38580d6d0438e5669b712635648568feb41fbfbd2762396a99c06695a33f129f48daf761247df5a463910ca075b13cd73009e7ef6406f391e273d_640.jpg"
+    },
+    {
+      "question": "Sonnenaufgang oder Sonnenuntergang",
+      "img1": "https://pixabay.com/get/gf751a842d59be9168ecd0288ea74babee8a6283aad45dcd4ae124030bff751760f44be520f66c1f055dedd2d6f9f6e71876d9e546f9a847268bc3a516ad0ea60_640.jpg",
+      "img2": "https://pixabay.com/get/g5d110de8d62f8e074269e50f30c68fec2b425d857039cc7ebeaf7583a3d83ec9e7a1a4132fd4bd7c1052fca943c914d6537d1cc23f69dada011edac3bc685c19_640.jpg"
+    },
+    {
+      "question": "Baden oder Duschen",
+      "img1": "https://pixabay.com/get/g1516e8f6f990ce3272cced68cf84453b7f00d0c424cbecca7c8dc5051c5d3468423a198c940bd7f92119e2d6c399887644e123395676169a384b9831a882a4bc_640.jpg",
+      "img2": "https://pixabay.com/get/gd83367256f3259f157d6c3759d407485727daa6886cb14a64fce1d711d57daa3e4b91b849319116ace82a764d34c6b91bb4a45dacad209893f40bbdd9a3bed6b_640.jpg"
+    }
   ]
 }
