@@ -14,6 +14,21 @@
     "right",
     "left"
   ],
+    "Amelie": [
+    "right",
+    "left",
+    "left",
+    "right",
+    "left",
+    "left",
+    "right",
+    "left",
+    "right",
+    "left",
+    "left",
+    "right",
+    "left"
+  ],
   "_chat": {
     "msg_1753939060901": {
       "user": "Yannick",
@@ -83,20 +98,5 @@
       "user": "Amelie",
       "text": "Also zemmegfasst hätte mer eig alles glich usser vergangenheit/zukunft und auto fahren/fahrrad fahren"
     }
-  },
-  "Amelie": [
-    "right",
-    "left",
-    "left",
-    "right",
-    "left",
-    "left",
-    "right",
-    "left",
-    "right",
-    "left",
-    "left",
-    "right",
-    "left"
-  ]
+  }
 }
