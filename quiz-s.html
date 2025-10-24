@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spicy Quiz – Soft · Hot · Hard · Extreem</title>
+  <link rel="stylesheet" href="css/quiz-s.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="bg"></div>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="dot"></span>
+      <span>Spicy Quiz</span>
+    </div>
+    <nav class="level-picker" role="tablist" aria-label="Level wählen">
+      <button class="chip active" data-level="soft" role="tab" aria-selected="true">Soft</button>
+      <button class="chip" data-level="hot" role="tab" aria-selected="false">Hot</button>
+      <button class="chip" data-level="hard" role="tab" aria-selected="false">Hard</button>
+      <button class="chip" data-level="extreem" role="tab" aria-selected="false">Extreem</button>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section id="setup" class="card glass">
+      <h1 class="title">Bereit für Feuer?</h1>
+      <p class="muted">
+        Gebt eure Namen ein, wählt oben das Level und startet. Pro Runde: 10 Fragen pro Person.
+      </p>
+
+      <form id="setupForm" class="grid">
+        <label class="field">
+          <span>Spieler:in A</span>
+          <input id="nameA" name="nameA" maxlength="18" placeholder="Name A" autocomplete="off" required />
+        </label>
+
+        <label class="field">
+          <span>Spieler:in B</span>
+          <input id="nameB" name="nameB" maxlength="18" placeholder="Name B" autocomplete="off" required />
+        </label>
+
+        <div class="row">
+          <label class="switch">
+            <input type="checkbox" id="shuffleStart" checked />
+            <span class="slider"></span>
+            <span class="switch-label">Zufällig wer beginnt</span>
+          </label>
+        </div>
+
+        <button id="startBtn" type="submit" class="btn glow">Start</button>
+      </form>
+    </section>
+
+    <section id="game" class="card glass hidden" aria-live="polite">
+      <div class="progress">
+        <div class="pcol">
+          <div class="pname" id="pnameA">A</div>
+          <div class="pbar"><span id="pbarA" style="width:0%"></span></div>
+          <div class="pcount"><span id="pcountA">0</span>/10</div>
+        </div>
+        <div class="pcol">
+          <div class="pname" id="pnameB">B</div>
+          <div class="pbar"><span id="pbarB" style="width:0%"></span></div>
+          <div class="pcount"><span id="pcountB">0</span>/10</div>
+        </div>
+      </div>
+
+      <div class="question-wrap">
+        <div class="badge" id="levelBadge">Soft</div>
+        <h2 class="turn" id="turnLabel">—</h2>
+        <p class="question" id="questionText">—</p>
+      </div>
+
+      <div class="controls">
+        <button id="skipBtn" class="btn subtle">Überspringen</button>
+        <button id="nextBtn" class="btn glow">Nächste Frage</button>
+      </div>
+    </section>
+
+    <section id="end" class="card glass hidden">
+      <h2 class="title">Runde fertig</h2>
+      <p id="summary" class="muted">Ihr habt beide 10/10 geschafft. Lust auf eine heissere Stufe?</p>
+      <div class="end-actions">
+        <button id="againBtn" class="btn">Nochmal gleiche Stufe</button>
+        <button id="levelUpBtn" class="btn glow">Eine Stufe höher</button>
+        <button id="restartBtn" class="btn subtle">Namen ändern</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small>Soft · Hot · Hard · Extreem – 10 Fragen je Spieler:in pro Runde</small>
+  </footer>
+
+  <script src="js/quiz-s.js"></script>
+</body>
+</html>
